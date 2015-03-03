@@ -9,6 +9,13 @@ public class Bucket
     int m_totalTimeToCollect;
     int m_currentMoneyInBucket;
 
+	public Bucket(int i_valueForMinute,int i_maxAmount,int i_totalTimeToCollect,int i_currentMoneyInBucket){
+		m_valueForMinute = i_valueForMinute;
+		m_maxAmount = i_maxAmount;
+		m_totalTimeToCollect = i_totalTimeToCollect;
+		m_currentMoneyInBucket = i_currentMoneyInBucket;
+	}
+
     public int EmptyBucket()
     {
         int moneyToReturn = m_currentMoneyInBucket;
