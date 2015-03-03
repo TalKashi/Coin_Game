@@ -65,6 +65,7 @@ public class Player
 	}
 
 
+
     private bool checkIfReachedNewLevel()
     {
         // Need to research how to decide

@@ -38,7 +38,8 @@ public class GameManagerScript : MonoBehaviour {
 		//
 		if(Input.GetKeyDown(KeyCode.Z))
 		{
-			
+			print("Spin");
+			playSlotMachine();
 		}
 
 		if (Time.time - m_startTime >= 60f)
@@ -46,6 +47,21 @@ public class GameManagerScript : MonoBehaviour {
 			print ("Adding money to bucket");
 			m_bucket.AddMoneyToBucket();
 			m_startTime = Time.time;
+		}
+	}
+
+
+	private void playSlotMachine()
+	{
+		int num1 = Random.Range (1, 4);
+		int num2 = Random.Range (1, 4);
+		int num3 = Random.Range (1, 4);
+		print (num1 + "-----" + num2 + "------" + num3);
+		m_player.DecreaseMoney (20);
+		if (num1 == num2 && num1 == num3) 
+		{
+			print("Great Win");
+			m_player.AddMoney(100);
 		}
 	}
 }
