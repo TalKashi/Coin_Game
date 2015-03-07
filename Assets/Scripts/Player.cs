@@ -7,9 +7,10 @@ public class Player
 {
     int m_cash;
     int m_experience;
+    int m_level;
     Bucket m_bucket;
     string m_name;
-    System.DateTime m_disconnectDate;
+    DateTime m_disconnectDate;
 
     public Player(string i_name, int i_initialCash)
     {
@@ -19,7 +20,7 @@ public class Player
     }
 
 
-    public Player(string i_name, int i_cash, int i_experience, Bucket i_bucket, System.DateTime i_disconnectDate)
+    public Player(string i_name, int i_cash, int i_experience, Bucket i_bucket, DateTime i_disconnectDate)
     {
         m_name = i_name;
         m_cash = i_cash;
@@ -48,7 +49,7 @@ public class Player
 
     public void OnDisconnecting()
     {
-        m_disconnectDate = System.DateTime.Now;
+        m_disconnectDate = DateTime.Now;
     }
 
 	public void SetBucket(Bucket i_bucket)
@@ -65,7 +66,17 @@ public class Player
 		return m_cash;
 	}
 
-    public void PlayerConnected(System.DateTime i_nowDate)
+    public int GetExperience()
+    {
+        return m_experience;
+    }
+
+    public int GetLevel()
+    {
+        return m_level;
+    }
+
+    public void PlayerConnected(DateTime i_nowDate)
     {
         int deltaTime = (int)i_nowDate.Subtract(m_disconnectDate).TotalMinutes;
         m_bucket.AddMoneyToBucket(deltaTime);

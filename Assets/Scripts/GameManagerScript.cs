@@ -11,6 +11,7 @@ public class GameManagerScript : MonoBehaviour
 	Player m_player;
 	Bucket m_bucket;
 	Coin m_coin;
+    ISlot m_slot;
 	float m_startTime;
 
     void Awake()
@@ -51,6 +52,8 @@ public class GameManagerScript : MonoBehaviour
 		m_coin.SetPlayer(m_player);
         if(shouldAddMoneyToBucket)
             m_player.PlayerConnected(System.DateTime.Now);
+
+        m_slot = new SlotPrototype(5, 50, 3, 5, m_player);
 	}
 	
 	// Update is called once per frame
@@ -77,6 +80,7 @@ public class GameManagerScript : MonoBehaviour
 		{
 			print("Spin");
 			playSlotMachine();
+		    m_player.AddExperience(10);
 		}
 
 		if (Time.time - m_startTime >= 30f)
@@ -146,6 +150,20 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
+    public Player GetPlayer()
+    {
+        return m_player;
+    }
+
+    public void OnCoinClick()
+    {
+        m_coin.OnClickEvent();
+    }
+
+    public ISlot GetSlot()
+    {
+        return m_slot;
+    }
 
 	private void playSlotMachine()
 	{

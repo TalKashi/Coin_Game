@@ -24,4 +24,6 @@ public interface ISlot
     void DisplayPayTable();
 
     int GetCurrentBet();
+
+    int[] GetSlotRackResult();
 }
