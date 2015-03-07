@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
+[Serializable]
 public class Bucket
 {
     System.DateTime m_lastBucketFlush;
@@ -9,7 +11,8 @@ public class Bucket
     int m_totalTimeToCollect;
     int m_currentMoneyInBucket;
 
-	public Bucket(int i_valueForMinute,int i_maxAmount,int i_totalTimeToCollect,int i_currentMoneyInBucket){
+	public Bucket(int i_valueForMinute,int i_maxAmount,int i_totalTimeToCollect,int i_currentMoneyInBucket)
+    {
 		m_valueForMinute = i_valueForMinute;
 		m_maxAmount = i_maxAmount;
 		m_totalTimeToCollect = i_totalTimeToCollect;
@@ -34,10 +37,12 @@ public class Bucket
 
         if (m_currentMoneyInBucket > m_maxAmount)
             m_currentMoneyInBucket = m_maxAmount;
+        Debug.Log("New value in bucket: " + m_currentMoneyInBucket);
     }
 
     public void AddMoneyToBucket(int i_minutes)
     {
+        Debug.Log("Adding money to bucket of " + i_minutes + " minutes");
         if (m_currentMoneyInBucket >= m_maxAmount)
             return;
 
@@ -45,5 +50,7 @@ public class Bucket
 
         if (m_currentMoneyInBucket > m_maxAmount)
             m_currentMoneyInBucket = m_maxAmount;
+
+        Debug.Log("New value in bucket: " + m_currentMoneyInBucket);
     }
 }

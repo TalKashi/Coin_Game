@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
+[Serializable]
 public class Coin
 {
     int m_value;
@@ -20,5 +22,10 @@ public class Coin
     public void SetNewValue(int i_newValue)
     {
         m_value = i_newValue;
+    }
+
+    public void SetPlayer(Player i_player)
+    {
+        m_player = i_player;
     }
 }

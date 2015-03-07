@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
-
+[Serializable]
 public class Player
 {
     int m_cash;
@@ -25,7 +26,7 @@ public class Player
         m_experience = i_experience;
         m_bucket = i_bucket;
         m_disconnectDate = i_disconnectDate;
-        playerConnected(System.DateTime.Now);
+        //playerConnected(System.DateTime.Now);
     }
 
 
@@ -64,7 +65,11 @@ public class Player
 		return m_cash;
 	}
 
-
+    public void PlayerConnected(System.DateTime i_nowDate)
+    {
+        int deltaTime = (int)i_nowDate.Subtract(m_disconnectDate).TotalMinutes;
+        m_bucket.AddMoneyToBucket(deltaTime);
+    }
 
     private bool checkIfReachedNewLevel()
     {
@@ -73,10 +78,6 @@ public class Player
         return false;
     }
 
-    private void playerConnected(System.DateTime i_nowDate)
-    {
-        int deltaTime = (int)i_nowDate.Subtract(m_disconnectDate).TotalMinutes;
-        m_bucket.AddMoneyToBucket(deltaTime);
-    }
+   
 
 }

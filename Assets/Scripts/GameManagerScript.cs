@@ -1,19 +1,56 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
-public class GameManagerScript : MonoBehaviour {
+public class GameManagerScript : MonoBehaviour
+{
+
+    public static GameManagerScript GameManager;
+
 	Player m_player;
 	Bucket m_bucket;
 	Coin m_coin;
 	float m_startTime;
 
+    void Awake()
+    {
+        if (GameManager == null)
+        {
+            GameManager = this;
+            DontDestroyOnLoad(gameObject);
+            m_startTime = Time.time;
+        }
+        else if(GameManager != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 	// Use this for initialization
-	void Start () {
-		m_player = new Player ("Serge", 10000);
-		m_bucket = new Bucket(10,1000,10,0);
+	void Start ()
+	{
+	    bool shouldAddMoneyToBucket = true;
+	    if (m_player == null)
+	    {
+            m_player = new Player("Serge", 10000);
+            Debug.Log("Created new instance of player!");
+	    }
+	    if (m_bucket == null)
+	    {
+            m_bucket = new Bucket(10, 1000, 10, 0);
+	        shouldAddMoneyToBucket = false;
+            Debug.Log("Created new instance of bucket!");
+	    }
 		m_player.SetBucket (m_bucket);
-		m_coin = new Coin (1, m_player);
-		m_startTime = Time.time;
+	    if (m_coin == null)
+	    {
+            m_coin = new Coin(1, m_player);
+            Debug.Log("Created new instance of coin!");
+	    }
+		m_coin.SetPlayer(m_player);
+        if(shouldAddMoneyToBucket)
+            m_player.PlayerConnected(System.DateTime.Now);
 	}
 	
 	// Update is called once per frame
@@ -42,13 +79,72 @@ public class GameManagerScript : MonoBehaviour {
 			playSlotMachine();
 		}
 
-		if (Time.time - m_startTime >= 60f)
+		if (Time.time - m_startTime >= 30f)
 		{
 			print ("Adding money to bucket");
 			m_bucket.AddMoneyToBucket();
 			m_startTime = Time.time;
 		}
 	}
+
+    void OnDisable()
+    {
+        m_player.OnDisconnecting();
+        Save();
+    }
+
+    void OnEnable()
+    {
+        Load();
+    }
+
+    public void Save()
+    {
+        Debug.Log("SAVING FILES");
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+
+        FileStream file = File.Create(Application.persistentDataPath + "/bucket.dat");
+        binaryFormatter.Serialize(file, m_bucket);
+        file.Close();
+
+        file = File.Create(Application.persistentDataPath + "/player.dat");
+        binaryFormatter.Serialize(file, m_player);
+        file.Close();
+
+        file = File.Create(Application.persistentDataPath + "/coin.dat");
+        binaryFormatter.Serialize(file, m_coin);
+        file.Close();
+    }
+
+    public void Load()
+    {
+        Debug.Log("LOADING FILES");
+        Debug.Log("path: " + Application.persistentDataPath);
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        if (File.Exists(Application.persistentDataPath + "/bucket.dat"))
+        {
+            FileStream file = File.OpenRead(Application.persistentDataPath + "/bucket.dat");
+            m_bucket = (Bucket) binaryFormatter.Deserialize(file);
+            file.Close();
+            Debug.Log("Loaded Bucket");
+        }
+
+        if (File.Exists(Application.persistentDataPath + "/player.dat"))
+        {
+            FileStream file = File.OpenRead(Application.persistentDataPath + "/player.dat");
+            m_player = (Player) binaryFormatter.Deserialize(file);
+            file.Close();
+            Debug.Log("Loaded Player");
+        }
+
+        if (File.Exists(Application.persistentDataPath + "/coin.dat"))
+        {
+            FileStream file = File.OpenRead(Application.persistentDataPath + "/coin.dat");
+            m_coin = (Coin) binaryFormatter.Deserialize(file);
+            file.Close();
+            Debug.Log("Loaded Coin");
+        }
+    }
 
 
 	private void playSlotMachine()
