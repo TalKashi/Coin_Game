@@ -74,6 +74,7 @@ public class Player
     private bool checkIfReachedNewLevel()
     {
         // Need to research how to decide
+        // http://gamedev.stackexchange.com/questions/8965/how-to-implement-an-experience-system
 
         return false;
     }
