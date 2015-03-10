@@ -14,6 +14,8 @@ public class ExperienceBarScript : MonoBehaviour
         m_experienceSlider = GetComponent<Slider>();
         m_levelText = GetComponentInChildren<Text>();
         m_player = GameManagerScript.GameManager.GetPlayer();
+		m_experienceSlider.minValue = m_player.GetMinXP ();
+		m_experienceSlider.maxValue = m_player.GetMaxXP ();
         m_experienceSlider.value = m_player.GetExperience();
         m_levelText.text = "Level " + m_player.GetLevel();
     }
@@ -22,11 +24,8 @@ public class ExperienceBarScript : MonoBehaviour
 	void Update ()
 	{
 	    m_experienceSlider.value = m_player.GetExperience();
-	    if (m_player.GetExperience() >= m_experienceSlider.maxValue)
-	    {
-	        m_experienceSlider.minValue = m_experienceSlider.maxValue;
-	        m_experienceSlider.maxValue = m_experienceSlider.maxValue * 2;
-	    }
-	    m_levelText.text = "Level " + m_player.GetLevel();
+		m_experienceSlider.minValue = m_player.GetMinXP ();
+		m_experienceSlider.maxValue = m_player.GetMaxXP ();
+		m_levelText.text = "Level " + m_player.GetLevel();
 	}
 }
