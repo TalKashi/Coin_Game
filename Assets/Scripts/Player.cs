@@ -57,11 +57,6 @@ public class Player
         m_disconnectDate = DateTime.Now;
     }
 
-	public void EmptyBucket ()
-	{
-		m_cash += GameManagerScript.GameManager.EmptyBucket();
-	}
-
 	public int GetCash(){
 		return m_cash;
 	}

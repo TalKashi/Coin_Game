@@ -47,12 +47,7 @@ public class GameManagerScript : MonoBehaviour
 			print("Add coin with value of: " + m_coin.m_value);
 			m_coin.OnClickEvent();
 		}
-		//Empty bucket
-		if(Input.GetKeyDown(KeyCode.S))
-		{
-			print("Empty Bucket");
-			m_player.EmptyBucket();
-		}
+
 		//Print balance
 		if(Input.GetKeyDown(KeyCode.D))
 		{
@@ -175,9 +170,14 @@ public class GameManagerScript : MonoBehaviour
 		m_bucket.AddMoneyToBucket (i_deltaTime);
 	}
 
-	public int EmptyBucket()
+	public Bucket GetBucket ()
 	{
-		return m_bucket.EmptyBucket ();
+		return m_bucket;
+	}
+
+	public void EmptyBucket()
+	{
+		m_player.AddMoney (m_bucket.EmptyBucket ());
 	}
 
 	public void SwitchScene(){

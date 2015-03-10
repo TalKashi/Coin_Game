@@ -53,4 +53,9 @@ public class Bucket
 
         Debug.Log("New value in bucket: " + m_currentMoneyInBucket);
     }
+
+	public int GetMoneyInBucket ()
+	{
+		return m_currentMoneyInBucket;
+	}
 }

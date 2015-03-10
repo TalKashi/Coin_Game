@@ -71,6 +71,7 @@ public class SlotPrototype : ISlot
 
     public void DisplayPayTable()
     {
+			
         throw new NotImplementedException();
     }
 
