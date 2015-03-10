@@ -5,27 +5,24 @@ using System.Collections;
 [Serializable]
 public class Coin
 {
-    int m_value;
-    Player m_player;
+    public int m_value;
 
-    public Coin(int i_value, Player i_player)
+    public Coin(int i_value)
     {
+		Debug.Log ("Constructor i_value: " + i_value);
         m_value = i_value;
-        m_player = i_player;
+		Debug.Log ("Constructor m_value: " + m_value);
     }
 
     public void OnClickEvent()
     {
-        m_player.AddMoney(m_value);
+		Debug.Log ("m_amount in COIN = " + m_value);
+		GameManagerScript.GameManager.AddMoneyToPlayer (m_value);
     }
 
     public void SetNewValue(int i_newValue)
     {
         m_value = i_newValue;
     }
-
-    public void SetPlayer(Player i_player)
-    {
-        m_player = i_player;
-    }
+	
 }

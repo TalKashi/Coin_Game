@@ -8,7 +8,6 @@ public class Player
     int m_cash;
     int m_experience;
     int m_level;
-    Bucket m_bucket;
     string m_name;
     DateTime m_disconnectDate;
 
@@ -20,12 +19,11 @@ public class Player
     }
 
 
-    public Player(string i_name, int i_cash, int i_experience, Bucket i_bucket, DateTime i_disconnectDate)
+    public Player(string i_name, int i_cash, int i_experience, DateTime i_disconnectDate)
     {
         m_name = i_name;
         m_cash = i_cash;
         m_experience = i_experience;
-        m_bucket = i_bucket;
         m_disconnectDate = i_disconnectDate;
         //playerConnected(System.DateTime.Now);
     }
@@ -33,7 +31,9 @@ public class Player
 
     public void AddMoney(int i_amount)
     {
+		Debug.Log ("i_Amount = " + i_amount);
         m_cash += i_amount;
+		Debug.Log ("New Money: " + m_cash);
     }
 
     public void DecreaseMoney(int i_amount)
@@ -52,14 +52,9 @@ public class Player
         m_disconnectDate = DateTime.Now;
     }
 
-	public void SetBucket(Bucket i_bucket)
-	{
-		this.m_bucket = i_bucket;
-	}
-
 	public void EmptyBucket ()
 	{
-		m_cash += m_bucket.EmptyBucket();
+		m_cash += GameManagerScript.GameManager.EmptyBucket();
 	}
 
 	public int GetCash(){
@@ -79,7 +74,7 @@ public class Player
     public void PlayerConnected(DateTime i_nowDate)
     {
         int deltaTime = (int)i_nowDate.Subtract(m_disconnectDate).TotalMinutes;
-        m_bucket.AddMoneyToBucket(deltaTime);
+		GameManagerScript.GameManager.AddMoneyToBucket (deltaTime);
     }
 
     private bool checkIfReachedNewLevel()

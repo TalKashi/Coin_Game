@@ -13,6 +13,7 @@ public class GameManagerScript : MonoBehaviour
 	Coin m_coin;
     ISlot m_slot;
 	float m_startTime;
+	string m_currentScene;
 
     void Awake()
     {
@@ -21,39 +22,21 @@ public class GameManagerScript : MonoBehaviour
             GameManager = this;
             DontDestroyOnLoad(gameObject);
             m_startTime = Time.time;
+			Load();
+			m_slot = new SlotPrototype(5, 50, 3, 5, m_player);
         }
         else if(GameManager != this)
         {
             Destroy(gameObject);
         }
+		
+
     }
 
 	// Use this for initialization
 	void Start ()
 	{
-	    bool shouldAddMoneyToBucket = true;
-	    if (m_player == null)
-	    {
-            m_player = new Player("Serge", 10000);
-            Debug.Log("Created new instance of player!");
-	    }
-	    if (m_bucket == null)
-	    {
-            m_bucket = new Bucket(10, 1000, 10, 0);
-	        shouldAddMoneyToBucket = false;
-            Debug.Log("Created new instance of bucket!");
-	    }
-		m_player.SetBucket (m_bucket);
-	    if (m_coin == null)
-	    {
-            m_coin = new Coin(1, m_player);
-            Debug.Log("Created new instance of coin!");
-	    }
-		m_coin.SetPlayer(m_player);
-        if(shouldAddMoneyToBucket)
-            m_player.PlayerConnected(System.DateTime.Now);
-
-        m_slot = new SlotPrototype(5, 50, 3, 5, m_player);
+		m_currentScene = Application.loadedLevelName;
 	}
 	
 	// Update is called once per frame
@@ -61,7 +44,7 @@ public class GameManagerScript : MonoBehaviour
 		//Press on coin
 		if(Input.GetKeyDown(KeyCode.A))
 		{
-			print("Add coin");
+			print("Add coin with value of: " + m_coin.m_value);
 			m_coin.OnClickEvent();
 		}
 		//Empty bucket
@@ -93,13 +76,11 @@ public class GameManagerScript : MonoBehaviour
 
     void OnDisable()
     {
-        m_player.OnDisconnecting();
-        Save();
-    }
-
-    void OnEnable()
-    {
-        Load();
+		if (this == GameManager) 
+		{
+			m_player.OnDisconnecting ();
+			Save ();     
+		}
     }
 
     public void Save()
@@ -125,29 +106,44 @@ public class GameManagerScript : MonoBehaviour
         Debug.Log("LOADING FILES");
         Debug.Log("path: " + Application.persistentDataPath);
         BinaryFormatter binaryFormatter = new BinaryFormatter();
-        if (File.Exists(Application.persistentDataPath + "/bucket.dat"))
-        {
-            FileStream file = File.OpenRead(Application.persistentDataPath + "/bucket.dat");
-            m_bucket = (Bucket) binaryFormatter.Deserialize(file);
-            file.Close();
-            Debug.Log("Loaded Bucket");
-        }
+        if (File.Exists (Application.persistentDataPath + "/bucket.dat")) {
+			FileStream file = File.OpenRead (Application.persistentDataPath + "/bucket.dat");
+			m_bucket = (Bucket)binaryFormatter.Deserialize (file);
+			file.Close ();
+			Debug.Log ("Loaded Bucket");
+		} 
+		else
+		{
+			m_bucket = new Bucket (20, 1000, 60, 0);
+			Debug.Log("Created new instance of bucket!");
+		}
 
-        if (File.Exists(Application.persistentDataPath + "/player.dat"))
-        {
-            FileStream file = File.OpenRead(Application.persistentDataPath + "/player.dat");
-            m_player = (Player) binaryFormatter.Deserialize(file);
-            file.Close();
-            Debug.Log("Loaded Player");
-        }
 
-        if (File.Exists(Application.persistentDataPath + "/coin.dat"))
-        {
-            FileStream file = File.OpenRead(Application.persistentDataPath + "/coin.dat");
-            m_coin = (Coin) binaryFormatter.Deserialize(file);
-            file.Close();
-            Debug.Log("Loaded Coin");
-        }
+        if (File.Exists (Application.persistentDataPath + "/player.dat")) {
+			FileStream file = File.OpenRead (Application.persistentDataPath + "/player.dat");
+			m_player = (Player)binaryFormatter.Deserialize (file);
+			file.Close ();
+			Debug.Log ("Loaded Player");
+			m_player.PlayerConnected(System.DateTime.Now);
+		} 
+		else
+		{
+			m_player = new Player("Serge", 10000);
+			Debug.Log("Created new instance of player!");
+		}
+
+        if (File.Exists (Application.persistentDataPath + "/coin.dat")) {
+			FileStream file = File.OpenRead (Application.persistentDataPath + "/coin.dat");
+			m_coin = (Coin)binaryFormatter.Deserialize (file);
+			file.Close ();
+			Debug.Log ("Loaded Coin");
+		} 
+		else
+		{
+			m_coin = new Coin(1);
+			Debug.Log("Created new instance of coin!");
+		}
+
     }
 
     public Player GetPlayer()
@@ -157,13 +153,37 @@ public class GameManagerScript : MonoBehaviour
 
     public void OnCoinClick()
     {
+		Debug.Log ("this is the value of the coin: " + m_coin.m_value);
         m_coin.OnClickEvent();
     }
+
+
 
     public ISlot GetSlot()
     {
         return m_slot;
     }
+
+	public void AddMoneyToPlayer(int i_amount)
+	{
+
+		m_player.AddMoney (i_amount);
+	}
+
+	public void AddMoneyToBucket(int i_deltaTime)
+	{
+		m_bucket.AddMoneyToBucket (i_deltaTime);
+	}
+
+	public int EmptyBucket()
+	{
+		return m_bucket.EmptyBucket ();
+	}
+
+	public void SwitchScene(){
+		string nextScene = getNextScene (m_currentScene);
+		Application.LoadLevel (nextScene);
+	}
 
 	private void playSlotMachine()
 	{
@@ -177,5 +197,18 @@ public class GameManagerScript : MonoBehaviour
 			print("Great Win");
 			m_player.AddMoney(100);
 		}
+	}
+
+	private string getNextScene(string i_scene)
+	{
+		if (i_scene == "Coin_Kashi") {
+			m_currentScene = "Slot_Kashi";
+		} 
+		else 
+		{
+			m_currentScene = "Coin_Kashi";
+		}
+
+		return m_currentScene;
 	}
 }
