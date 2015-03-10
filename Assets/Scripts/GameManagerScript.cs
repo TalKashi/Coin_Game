@@ -21,7 +21,6 @@ public class GameManagerScript : MonoBehaviour
         {
             GameManager = this;
             DontDestroyOnLoad(gameObject);
-            m_startTime = Time.time;
 			Load();
 			m_slot = new SlotPrototype(5, 50, 3, 5, m_player);
         }
@@ -36,6 +35,7 @@ public class GameManagerScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+        m_startTime = Time.time;
 		m_currentScene = Application.loadedLevelName;
 	}
 	
