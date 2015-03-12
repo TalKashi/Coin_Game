@@ -39,11 +39,8 @@ public class Player
 		Debug.Log ("i_Amount = " + i_amount);
         m_cash += i_amount;
 		Debug.Log ("New Money: " + m_cash);
-    }
 
-    public void DecreaseMoney(int i_amount)
-    {
-        m_cash -= i_amount;
+        GameManagerScript.GameManager.CheckAndUpdateRecordCash(m_cash);
     }
 
     public bool AddExperience(int i_amount)

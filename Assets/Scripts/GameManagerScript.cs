@@ -11,6 +11,7 @@ public class GameManagerScript : MonoBehaviour
 	Player m_player;
 	Bucket m_bucket;
 	Coin m_coin;
+    Statistics m_statistics;
     ISlot m_slot;
 	float m_startTime;
 	string m_currentScene;
@@ -123,7 +124,7 @@ public class GameManagerScript : MonoBehaviour
 		} 
 		else
 		{
-			m_player = new Player("Serge", 10000);
+			m_player = new Player("Serge", 0);
 			Debug.Log("Created new instance of player!");
 		}
 
@@ -138,6 +139,19 @@ public class GameManagerScript : MonoBehaviour
 			m_coin = new Coin(1);
 			Debug.Log("Created new instance of coin!");
 		}
+
+        if (File.Exists(Application.persistentDataPath + "/statistics.dat"))
+        {
+            FileStream file = File.OpenRead(Application.persistentDataPath + "/statistics.dat");
+            m_statistics = (Statistics)binaryFormatter.Deserialize(file);
+            file.Close();
+            Debug.Log("Loaded Statistics");
+        }
+        else
+        {
+            m_statistics = new Statistics();
+            Debug.Log("Created new instance of statistics!");
+        }
 
     }
 
@@ -176,6 +190,14 @@ public class GameManagerScript : MonoBehaviour
     public void AddMoneyToPlayer(int i_amount)
     {
         m_player.AddMoney(i_amount);
+    }
+
+    public void AddExperienceToPlayer(int i_amount)
+    {
+        if (m_player.AddExperience(i_amount))
+        {
+            // Display level up notification
+        }
     }
 
     #endregion Player Control
@@ -232,7 +254,10 @@ public class GameManagerScript : MonoBehaviour
 
     public void OnSpinEvent()
     {
-        m_slot.OnSpinEvent();
+        if (m_slot.OnSpinEvent() > 0)
+        {
+            // Display win notification
+        }
     }
 
     public void OnIncreaseBet()
@@ -247,6 +272,30 @@ public class GameManagerScript : MonoBehaviour
 
     #endregion Slot Control
 
+    #region Statistics Control
+
+    public void CheckAndUpdateRecordCash(int i_newCash)
+    {
+        m_statistics.CheckAndUpdateRecordCash(i_newCash);
+    }
+
+    public void CheckAndUpdateBiggestWin(int i_newWin)
+    {
+        m_statistics.CheckAndUpdateBiggestWin(i_newWin);
+    }
+
+    public void IncreamentTotalWins()
+    {
+        m_statistics.IncreamentTotalWins();
+    }
+
+    public void IncreamentTotalBets()
+    {
+        m_statistics.IncreamentTotalBets();
+    }
+
+    #endregion Statistics Control
+
     public void SwitchScene(){
 		string nextScene = getNextScene (m_currentScene);
 		Application.LoadLevel (nextScene);
@@ -258,7 +307,7 @@ public class GameManagerScript : MonoBehaviour
 		int num2 = Random.Range (1, 4);
 		int num3 = Random.Range (1, 4);
 		print (num1 + "-----" + num2 + "------" + num3);
-		m_player.DecreaseMoney (20);
+		m_player.AddMoney(-20);
 		if (num1 == num2 && num1 == num3) 
 		{
 			print("Great Win");
