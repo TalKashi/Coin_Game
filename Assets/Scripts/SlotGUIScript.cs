@@ -4,15 +4,15 @@ using System.Collections;
 
 public class SlotGUIScript : MonoBehaviour
 {
-    private ISlot m_slot;
+    //private ISlot m_slot;
     private Text m_currentBetText;
     private Text m_rackDisplayText;
-    private int[] m_slotRackResult;
+    //private int[] m_slotRackResult;
 
     void Start()
     {
-        m_slot = GameManagerScript.GameManager.GetSlot();
-        m_slotRackResult = m_slot.GetSlotRackResult();
+        //m_slot = GameManagerScript.GameManager.GetSlot();
+        //m_slotRackResult = GameManagerScript.GameManager.GetSlotRackResult();
         Text[] textsArray = GetComponentsInChildren<Text>();
         for (int i = 0; i < textsArray.Length; i++)
         {
@@ -31,14 +31,12 @@ public class SlotGUIScript : MonoBehaviour
 
     void Update()
     {
-        if(m_slot == null)
-            Start();
         string rackDisplay = "";
-        m_currentBetText.text = "Bet: " + m_slot.GetCurrentBet();
-        for (int i = 0; i < m_slotRackResult.Length; i++)
+        m_currentBetText.text = "Bet: " + GameManagerScript.GameManager.GetCurrentBet();
+        for (int i = 0; i < GameManagerScript.GameManager.GetSlotRackResult().Length; i++)
         {
-            rackDisplay += m_slotRackResult[i];
-            if (m_slotRackResult.Length - 1 > i)
+            rackDisplay += GameManagerScript.GameManager.GetSlotRackResult()[i];
+            if (GameManagerScript.GameManager.GetSlotRackResult().Length - 1 > i)
                 rackDisplay += " -- ";
         }
         m_rackDisplayText.text = rackDisplay;
@@ -46,16 +44,16 @@ public class SlotGUIScript : MonoBehaviour
 
     public void OnSpinClick()
     {
-        m_slot.OnSpinEvent();
+        GameManagerScript.GameManager.OnSpinEvent();
     }
 
     public void OnIncreaseBetClick()
     {
-        m_slot.OnIncreaseBet();
+        GameManagerScript.GameManager.OnIncreaseBet();
     }
 
     public void OnDecreaseBetClick()
     {
-        m_slot.OnDecreaseBet();
+        GameManagerScript.GameManager.OnDecreaseBet();
     }
 }

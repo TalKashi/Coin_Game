@@ -26,10 +26,11 @@ public class SlotPrototype : ISlot
 
     public int OnSpinEvent()
     {
+        int winAmount = 0;
         if (m_currentBet > m_player.GetCash())
         {
             Debug.Log("The bet is greater than the player cash!");
-            return 0;
+            return -1; // Maybe to notify the calling function player bet is low?
         }
 
         m_player.DecreaseMoney(m_currentBet);
@@ -40,10 +41,11 @@ public class SlotPrototype : ISlot
 
         if (m_slotRacks[0] == m_slotRacks[1] && m_slotRacks[1] == m_slotRacks[2])
         {
-            m_player.AddMoney(m_currentBet * 5);
+            winAmount = m_currentBet * 5;
+            m_player.AddMoney(winAmount);
         }
         m_player.AddExperience(10);
-        return 1;
+        return winAmount;
     }
 
     public void OnIncreaseBet()

@@ -141,38 +141,64 @@ public class GameManagerScript : MonoBehaviour
 
     }
 
-    public Player GetPlayer()
+    #region Player Control
+
+    //public Player GetPlayer()
+    //{
+    //    return m_player;
+    //}
+
+    public int GetPlayerCash()
     {
-        return m_player;
+        return m_player.GetCash();
     }
+
+    public int GetPlayerMaxXP()
+    {
+        return m_player.GetMaxXP();
+    }
+
+    public int GetPlayerMinXP()
+    {
+        return m_player.GetMinXP();
+    }
+
+    public int GetPlayerCurrentXP()
+    {
+        return m_player.GetExperience();
+    }
+
+    public int GetPlayerLevel()
+    {
+        return m_player.GetLevel();
+    }
+
+    public void AddMoneyToPlayer(int i_amount)
+    {
+        m_player.AddMoney(i_amount);
+    }
+
+    #endregion Player Control
+
+    #region Coin Control
 
     public void OnCoinClick()
     {
-		Debug.Log ("this is the value of the coin: " + m_coin.m_value);
         m_coin.OnClickEvent();
     }
 
+    #endregion Coin Control
 
+    #region Bucket Control
 
-    public ISlot GetSlot()
-    {
-        return m_slot;
-    }
+    //public Bucket GetBucket()
+    //{
+    //    return m_bucket;
+    //}
 
-	public void AddMoneyToPlayer(int i_amount)
-	{
-
-		m_player.AddMoney (i_amount);
-	}
-
-	public void AddMoneyToBucket(int i_deltaTime)
+    public void AddMoneyToBucket(int i_deltaTime)
 	{
 		m_bucket.AddMoneyToBucket (i_deltaTime);
-	}
-
-	public Bucket GetBucket ()
-	{
-		return m_bucket;
 	}
 
 	public void EmptyBucket()
@@ -180,7 +206,48 @@ public class GameManagerScript : MonoBehaviour
 		m_player.AddMoney (m_bucket.EmptyBucket ());
 	}
 
-	public void SwitchScene(){
+    public int GetMoneyInBucket()
+    {
+        return m_bucket.GetMoneyInBucket();
+    }
+
+    #endregion Bucket Control
+
+    #region Slot Control
+
+    //public ISlot GetSlot()
+    //{
+    //    return m_slot;
+    //}
+
+    public int[] GetSlotRackResult()
+    {
+        return m_slot.GetSlotRackResult();
+    }
+
+    public int GetCurrentBet()
+    {
+        return m_slot.GetCurrentBet();
+    }
+
+    public void OnSpinEvent()
+    {
+        m_slot.OnSpinEvent();
+    }
+
+    public void OnIncreaseBet()
+    {
+        m_slot.OnIncreaseBet();
+    }
+
+    public void OnDecreaseBet()
+    {
+        m_slot.OnDecreaseBet();
+    }
+
+    #endregion Slot Control
+
+    public void SwitchScene(){
 		string nextScene = getNextScene (m_currentScene);
 		Application.LoadLevel (nextScene);
 	}
