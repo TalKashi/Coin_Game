@@ -199,7 +199,7 @@ public class GameManagerScript : MonoBehaviour
     public void AddMoneyToPlayer(int i_amount)
     {
         m_player.AddMoney(i_amount);
-        CheckAndUpdateRecordCash(m_player.GetCash());
+        m_statistics.CheckAndUpdateRecordCash(m_player.GetCash());
     }
 
     public void AddExperienceToPlayer(int i_amount)
@@ -236,7 +236,7 @@ public class GameManagerScript : MonoBehaviour
 
 	public void EmptyBucket()
 	{
-		m_player.AddMoney (m_bucket.EmptyBucket ());
+		AddMoneyToPlayer(m_bucket.EmptyBucket ());
 	}
 
     public int GetMoneyInBucket()
@@ -279,7 +279,7 @@ public class GameManagerScript : MonoBehaviour
          */
         AddMoneyToPlayer(-m_slot.GetCurrentBet());
         AddExperienceToPlayer(10);
-        IncreamentTotalBets();
+        m_statistics.IncreamentTotalBets();
 
         /*
          * Then start slot animation (disable GUI buttons until animation ends)
@@ -296,7 +296,7 @@ public class GameManagerScript : MonoBehaviour
             // TODO: Display win notification
             // Should call a win function that will tell the animation how to end(win animation)
             m_statistics.UpdateMoneyWonFromSlots(winAmount);
-            IncreamentTotalWins();
+            m_statistics.IncreamentTotalWins();
             AddMoneyToPlayer(winAmount);
         }
     }
@@ -312,25 +312,6 @@ public class GameManagerScript : MonoBehaviour
     }
 
     #endregion Slot Control
-
-    #region Statistics Control
-
-    public void CheckAndUpdateRecordCash(int i_newCash)
-    {
-        m_statistics.CheckAndUpdateRecordCash(i_newCash);
-    }
-
-    public void IncreamentTotalWins()
-    {
-        m_statistics.IncreamentTotalWins();
-    }
-
-    public void IncreamentTotalBets()
-    {
-        m_statistics.IncreamentTotalBets();
-    }
-
-    #endregion Statistics Control
 
     public void SwitchScene(){
 		string nextScene = getNextScene (m_currentScene);
