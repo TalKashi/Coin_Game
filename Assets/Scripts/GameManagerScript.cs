@@ -58,7 +58,6 @@ public class GameManagerScript : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.Z))
 		{
 			print("Spin");
-			playSlotMachine();
 		    m_player.AddExperience(10);
 		}
 
@@ -318,19 +317,6 @@ public class GameManagerScript : MonoBehaviour
 		Application.LoadLevel (nextScene);
 	}
 
-	private void playSlotMachine()
-	{
-		int num1 = Random.Range (1, 4);
-		int num2 = Random.Range (1, 4);
-		int num3 = Random.Range (1, 4);
-		print (num1 + "-----" + num2 + "------" + num3);
-		m_player.AddMoney(-20);
-		if (num1 == num2 && num1 == num3) 
-		{
-			print("Great Win");
-			m_player.AddMoney(100);
-		}
-	}
 
 	private string getNextScene(string i_scene)
 	{
