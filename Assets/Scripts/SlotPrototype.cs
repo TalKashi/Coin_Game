@@ -44,8 +44,6 @@ public class SlotPrototype : ISlot
         {
             winAmount = m_currentBet * 5;
             GameManagerScript.GameManager.AddMoneyToPlayer(winAmount);
-            GameManagerScript.GameManager.IncreamentTotalWins();
-            GameManagerScript.GameManager.CheckAndUpdateBiggestWin(winAmount);
         }
         GameManagerScript.GameManager.AddExperienceToPlayer(10);
         return winAmount;

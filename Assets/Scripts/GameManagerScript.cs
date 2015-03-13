@@ -68,6 +68,11 @@ public class GameManagerScript : MonoBehaviour
 			m_bucket.AddMoneyToBucket();
 			m_startTime = Time.time;
 		}
+
+	    if (Input.GetKeyDown(KeyCode.Q))
+	    {
+	        Debug.Log(m_statistics);
+	    }
 	}
 
     void OnDisable()
@@ -94,6 +99,10 @@ public class GameManagerScript : MonoBehaviour
 
         file = File.Create(Application.persistentDataPath + "/coin.dat");
         binaryFormatter.Serialize(file, m_coin);
+        file.Close();
+
+        file = File.Create(Application.persistentDataPath + "/statistics.dat");
+        binaryFormatter.Serialize(file, m_statistics);
         file.Close();
     }
 
@@ -190,13 +199,14 @@ public class GameManagerScript : MonoBehaviour
     public void AddMoneyToPlayer(int i_amount)
     {
         m_player.AddMoney(i_amount);
+        CheckAndUpdateRecordCash(m_player.GetCash());
     }
 
     public void AddExperienceToPlayer(int i_amount)
     {
         if (m_player.AddExperience(i_amount))
         {
-            // Display level up notification
+            // TODO: Display level up notification
         }
     }
 
@@ -207,6 +217,7 @@ public class GameManagerScript : MonoBehaviour
     public void OnCoinClick()
     {
         m_coin.OnClickEvent();
+        m_statistics.IncreamentTotalClicksOnCoin();
     }
 
     #endregion Coin Control
@@ -254,9 +265,31 @@ public class GameManagerScript : MonoBehaviour
 
     public void OnSpinEvent()
     {
-        if (m_slot.OnSpinEvent() > 0)
+        int winAmount;
+        // TODO: All the checks that we do now in the OnSpinEvent we should do here! Also means to move calls to statistics to here.
+        //if (!m_slot.CanPlayerBet)
+        //{
+           // will check if player has enough money for the current bet. If cant bet display some message and return from method.
+        //}
+
+        /*
+         *  Player can bet so decrease player money with current bet
+         */
+
+        /*
+         * Then start slot animation
+         */
+
+        /*
+         * TODO: Change the ISlot.OnSpinEvent to something else that will be run after previous check.
+         * Will return amount won.
+         */ 
+        if ((winAmount = m_slot.OnSpinEvent()) > 0)
         {
-            // Display win notification
+            // Player has won!
+            // TODO: Display win notification
+            m_statistics.UpdateMoneyWonFromSlots(winAmount);
+            IncreamentTotalWins();
         }
     }
 
@@ -277,11 +310,6 @@ public class GameManagerScript : MonoBehaviour
     public void CheckAndUpdateRecordCash(int i_newCash)
     {
         m_statistics.CheckAndUpdateRecordCash(i_newCash);
-    }
-
-    public void CheckAndUpdateBiggestWin(int i_newWin)
-    {
-        m_statistics.CheckAndUpdateBiggestWin(i_newWin);
     }
 
     public void IncreamentTotalWins()
