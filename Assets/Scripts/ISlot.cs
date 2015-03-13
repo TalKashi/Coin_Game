@@ -16,9 +16,9 @@ public interface ISlot
 
     bool CanPlayerBet(int i_playerTotalCash);
 
-	void OnIncreaseBet();
+    void OnIncreaseBet(int i_playerTotalCash);
 
-    void OnDecreaseBet();
+    void OnDecreaseBet(int i_playerTotalCash);
 
     void DisplayPayTable();
 

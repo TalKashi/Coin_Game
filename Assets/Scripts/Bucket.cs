@@ -5,7 +5,7 @@ using System.Collections;
 [Serializable]
 public class Bucket
 {
-    System.DateTime m_lastBucketFlush;
+    DateTime m_lastBucketFlush;
     int m_valueForMinute;
     int m_maxAmount;
     int m_totalTimeToCollect;
@@ -23,7 +23,7 @@ public class Bucket
     {
         int moneyToReturn = m_currentMoneyInBucket;
         m_currentMoneyInBucket = 0;
-        m_lastBucketFlush = System.DateTime.Now;
+        m_lastBucketFlush = DateTime.Now;
 
         return moneyToReturn;
     }

@@ -76,7 +76,7 @@ public class GameManagerScript : MonoBehaviour
 
     void OnDisable()
     {
-		if (this == GameManager) 
+        if (GameManager == this) 
 		{
 			m_player.OnDisconnecting ();
 			Save ();     
@@ -302,12 +302,12 @@ public class GameManagerScript : MonoBehaviour
 
     public void OnIncreaseBet()
     {
-        m_slot.OnIncreaseBet();
+        m_slot.OnIncreaseBet(m_player.GetCash());
     }
 
     public void OnDecreaseBet()
     {
-        m_slot.OnDecreaseBet();
+        m_slot.OnDecreaseBet(m_player.GetCash());
     }
 
     #endregion Slot Control

@@ -51,12 +51,12 @@ public class SlotPrototype : ISlot
         return m_currentBet <= i_playerTotalCash;
     }
 
-    public void OnIncreaseBet()
+    public void OnIncreaseBet(int i_playerTotalCash)
     {
         if (m_currentBet == m_maximumBetAmount)
             return;
 
-        if (m_currentBet + m_increaseInterval > GameManagerScript.GameManager.GetPlayerCash())
+        if (m_currentBet + m_increaseInterval > i_playerTotalCash)
             return;
 
         m_currentBet += m_increaseInterval;
@@ -64,7 +64,7 @@ public class SlotPrototype : ISlot
             m_currentBet = m_maximumBetAmount;
     }
 
-    public void OnDecreaseBet()
+    public void OnDecreaseBet(int i_playerTotalCash)
     {
         if (m_currentBet == m_minimumBetAmount)
             return;
