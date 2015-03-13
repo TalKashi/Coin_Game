@@ -267,18 +267,24 @@ public class GameManagerScript : MonoBehaviour
     {
         int winAmount;
         // TODO: All the checks that we do now in the OnSpinEvent we should do here! Also means to move calls to statistics to here.
-        //if (!m_slot.CanPlayerBet)
-        //{
-           // will check if player has enough money for the current bet. If cant bet display some message and return from method.
-        //}
+        if (!m_slot.CanPlayerBet(m_player.GetCash()))
+        {
+            // will check if player has enough money for the current bet. If cant bet display some message and return from method.
+
+            return;
+        }
 
         /*
          *  Player can bet so decrease player money with current bet
          */
+        AddMoneyToPlayer(-m_slot.GetCurrentBet());
+        AddExperienceToPlayer(10);
+        IncreamentTotalBets();
 
         /*
-         * Then start slot animation
+         * Then start slot animation (disable GUI buttons until animation ends)
          */
+        // TODO: Add animation call
 
         /*
          * TODO: Change the ISlot.OnSpinEvent to something else that will be run after previous check.
@@ -288,8 +294,10 @@ public class GameManagerScript : MonoBehaviour
         {
             // Player has won!
             // TODO: Display win notification
+            // Should call a win function that will tell the animation how to end(win animation)
             m_statistics.UpdateMoneyWonFromSlots(winAmount);
             IncreamentTotalWins();
+            AddMoneyToPlayer(winAmount);
         }
     }
 

@@ -11,11 +11,10 @@ public interface ISlot
     int m_increaseInterval;
     Player m_player;
     */
-    /*
-     * Check at the start if going to win or not.
-     * If won update the money to player and send him XP earned
-     */
+    
 	int OnSpinEvent();
+
+    bool CanPlayerBet(int i_playerTotalCash);
 
 	void OnIncreaseBet();
 
