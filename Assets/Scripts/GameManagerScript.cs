@@ -33,7 +33,6 @@ public class GameManagerScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
-		
 
     }
 
@@ -42,7 +41,10 @@ public class GameManagerScript : MonoBehaviour
 	{
         m_startTime = Time.time;
 		m_currentScene = Application.loadedLevelName;
-		m_slotGameObjectScript = m_slotGameObject.GetComponent<SlotGameObjectScript>();
+		if (m_slotGameObject != null) 
+		{
+			m_slotGameObjectScript = m_slotGameObject.GetComponent<SlotGameObjectScript> ();
+		}
 	}
 	
 	// Update is called once per frame
@@ -269,6 +271,10 @@ public class GameManagerScript : MonoBehaviour
 
     public void OnSpinEvent()
     {
+		
+		m_slotGameObject = GameObject.FindGameObjectWithTag ("SlotGameObject");
+		m_slotGameObjectScript = m_slotGameObject.GetComponent<SlotGameObjectScript> ();
+
         int winAmount;
         // TODO: All the checks that we do now in the OnSpinEvent we should do here! Also means to move calls to statistics to here.
         if (!m_slot.CanPlayerBet(m_player.GetCash()))
