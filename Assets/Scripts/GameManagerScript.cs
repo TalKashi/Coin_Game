@@ -289,7 +289,7 @@ public class GameManagerScript : MonoBehaviour
          * Then start slot animation (disable GUI buttons until animation ends)
          */
 
-		//Temp solution, StartCoroutine issues(it doesnt wait until it finishes,it continue to execute the code. talk to Serge.
+		//Temp solution, StartCoroutine issues it doesnt wait until it finishes,it continue to execute the code. talk to Serge.
 		winAmount = m_slot.OnSpinEvent ();
 		m_slotGameObjectScript.SetWinAmount (winAmount);
 		m_slotGameObjectScript.StartSpinnigAnimation (m_timeReelsToSpin);
@@ -299,11 +299,13 @@ public class GameManagerScript : MonoBehaviour
          * Will return amount won.
          */ 
 		m_slot.SetChancesToWin (m_chancesToWin);
+
         if (winAmount > 0) {
 			Debug.Log("player Won");
 			// Player has won!
 			// TODO: Display win notification
 			// Should call a win function that will tell the animation how to end(win animation)
+
 			//m_slotGameObjectScript.DisplayResult(true);
 
 			m_statistics.UpdateMoneyWonFromSlots (winAmount);

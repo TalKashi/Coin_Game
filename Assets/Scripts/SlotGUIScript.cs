@@ -39,7 +39,7 @@ public class SlotGUIScript : MonoBehaviour
             if (GameManagerScript.GameManager.GetSlotRackResult().Length - 1 > i)
                 rackDisplay += " -- ";
         }
-        m_rackDisplayText.text = rackDisplay;
+       // m_rackDisplayText.text = rackDisplay;
     }
 
     public void OnSpinClick()
