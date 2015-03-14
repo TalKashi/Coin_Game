@@ -15,6 +15,10 @@ public class GameManagerScript : MonoBehaviour
     ISlot m_slot;
 	float m_startTime;
 	string m_currentScene;
+	public float m_timeReelsToSpin;
+	public GameObject m_slotGameObject;
+	SlotGameObjectScript m_slotGameObjectScript;
+	public int m_chancesToWin;
 
     void Awake()
     {
@@ -38,6 +42,7 @@ public class GameManagerScript : MonoBehaviour
 	{
         m_startTime = Time.time;
 		m_currentScene = Application.loadedLevelName;
+		m_slotGameObjectScript = m_slotGameObject.GetComponent<SlotGameObjectScript>();
 	}
 	
 	// Update is called once per frame
@@ -283,21 +288,33 @@ public class GameManagerScript : MonoBehaviour
         /*
          * Then start slot animation (disable GUI buttons until animation ends)
          */
-        // TODO: Add animation call
 
-        /*
+		//Temp solution, StartCoroutine issues(it doesnt wait until it finishes,it continue to execute the code. talk to Serge.
+		winAmount = m_slot.OnSpinEvent ();
+		m_slotGameObjectScript.SetWinAmount (winAmount);
+		m_slotGameObjectScript.StartSpinnigAnimation (m_timeReelsToSpin);
+        
+		/*
          * TODO: Change the ISlot.OnSpinEvent to something else that will be run after previous check.
          * Will return amount won.
          */ 
-        if ((winAmount = m_slot.OnSpinEvent()) > 0)
-        {
-            // Player has won!
-            // TODO: Display win notification
-            // Should call a win function that will tell the animation how to end(win animation)
-            m_statistics.UpdateMoneyWonFromSlots(winAmount);
-            m_statistics.IncreamentTotalWins();
-            AddMoneyToPlayer(winAmount);
-        }
+		m_slot.SetChancesToWin (m_chancesToWin);
+        if (winAmount > 0) {
+			Debug.Log("player Won");
+			// Player has won!
+			// TODO: Display win notification
+			// Should call a win function that will tell the animation how to end(win animation)
+			//m_slotGameObjectScript.DisplayResult(true);
+
+			m_statistics.UpdateMoneyWonFromSlots (winAmount);
+			m_statistics.IncreamentTotalWins ();
+			AddMoneyToPlayer (winAmount);
+		} 
+		else 
+		{
+			//lose animation
+			//m_slotGameObjectScript.DisplayResult(false);
+		}
     }
 
     public void OnIncreaseBet()

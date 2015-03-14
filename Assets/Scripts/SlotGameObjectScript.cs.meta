@@ -1,10 +1,11 @@
 fileFormatVersion: 2
 guid: 6be03d6c703b3a44195e843dea169ffa
-timeCreated: 1426320449
+timeCreated: 1426333130
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - m_reel: {fileID: 163848, guid: 46239467b8dc74042886c24048be923e, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

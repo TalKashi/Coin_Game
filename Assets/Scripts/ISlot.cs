@@ -25,4 +25,8 @@ public interface ISlot
     int GetCurrentBet();
 
     int[] GetSlotRackResult();
+
+	void SetChancesToWin(int i_chancesToWin);
+
+
 }

@@ -56,4 +56,6 @@ public class SlotGUIScript : MonoBehaviour
     {
         GameManagerScript.GameManager.OnDecreaseBet();
     }
+
+
 }

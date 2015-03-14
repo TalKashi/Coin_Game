@@ -8,8 +8,12 @@ public class SlotGameObjectScript : MonoBehaviour {
 	private GameObject m_firstReel;
 	private GameObject m_secondReel;
 	private GameObject m_thirdReel;
+	private Animator m_firstReelAnimator;
+	private Animator m_secondReelAnimator;
+	private Animator m_thirdReelAnimator;
 	public float m_timeReelsToSpin;
 	float m_timeBetweenReels;
+	int m_winAmount;
 
 	private Vector3[] m_loseConditions = {
 		new Vector3 (0, 0, 1),new Vector3 (0, 2, 0),new Vector3 (0, 2, 1),new Vector3 (0, 2, 2),
@@ -21,6 +25,10 @@ public class SlotGameObjectScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		createReels ();
+		m_firstReelAnimator = m_firstReel.gameObject.GetComponent<Animator> ();
+		m_secondReelAnimator = m_secondReel.gameObject.GetComponent<Animator> ();
+		m_thirdReelAnimator = m_thirdReel.gameObject.GetComponent<Animator> ();
+
 	}
 	
 	// Update is called once per frame
@@ -28,43 +36,47 @@ public class SlotGameObjectScript : MonoBehaviour {
 	
 	}
 
-	public void OnSpinEvent()
+
+	public void StartSpinnigAnimation(float i_timeReelsToSpin)
 	{
-		int randomNumber = Random.Range (0, 100);
-		StartCoroutine(startSpinnigReels ());
-		displayResult (randomNumber <= m_chancesToWin);
+		StartCoroutine(startSpinnigReels(i_timeReelsToSpin ));
 	}
 
-	IEnumerator startSpinnigReels()
+	IEnumerator startSpinnigReels(float i_timeReelsToSpin )
 	{
-		m_firstReel.gameObject.GetComponent<Animator> ().SetBool ("Spinnig", true);
-		m_secondReel.gameObject.GetComponent<Animator> ().SetBool ("Spinnig", true);
-		m_thirdReel.gameObject.GetComponent<Animator> ().SetBool ("Spinnig", true);
+		m_firstReelAnimator.SetBool ("Spinnig", true);
+		m_secondReelAnimator.SetBool ("Spinnig", true);
+		m_thirdReelAnimator.SetBool ("Spinnig", true);
 		yield return new WaitForSeconds(m_timeReelsToSpin);
-		m_firstReel.gameObject.GetComponent<Animator> ().SetBool ("Spinnig", false);
-		m_secondReel.gameObject.GetComponent<Animator> ().SetBool ("Spinnig", false);
-		m_thirdReel.gameObject.GetComponent<Animator> ().SetBool ("Spinnig", false);
+		DisplayResult (m_winAmount > 0);
+		m_firstReelAnimator.SetBool ("Spinnig", false);
+		m_secondReelAnimator.SetBool ("Spinnig", false);
+		m_thirdReelAnimator.SetBool ("Spinnig", false);
 	}
 
 
-	private void displayResult(bool i_isWin)
+	public void DisplayResult(bool i_isWin)
 	{
 
 		if (i_isWin) {
-			int winSymbol = Random.Range (0, 2);
-			m_firstReel.gameObject.GetComponent<Animator> ().SetInteger ("Symbol", winSymbol);
-			m_secondReel.gameObject.GetComponent<Animator> ().SetInteger ("Symbol", winSymbol);
-			m_thirdReel.gameObject.GetComponent<Animator> ().SetInteger ("Symbol", winSymbol);
-		} else 
-		{
-			Vector3 loseConditionSymbols = m_loseConditions[Random.Range(0,m_loseConditions.Length)];
-			m_firstReel.gameObject.GetComponent<Animator> ().SetInteger ("Symbol", (int) loseConditionSymbols.x);
-			m_secondReel.gameObject.GetComponent<Animator> ().SetInteger ("Symbol", (int)loseConditionSymbols.y);
-			m_thirdReel.gameObject.GetComponent<Animator> ().SetInteger ("Symbol", (int)loseConditionSymbols.z);
+			int winSymbol = Random.Range (0, 3);
+			m_firstReelAnimator.SetInteger ("Symbol", winSymbol);
+			m_secondReelAnimator.SetInteger ("Symbol", winSymbol);
+			m_thirdReelAnimator.SetInteger ("Symbol", winSymbol);
+		} else {
+			Vector3 loseConditionSymbols = m_loseConditions [Random.Range (0, m_loseConditions.Length)];
+			m_firstReelAnimator.SetInteger ("Symbol", (int)loseConditionSymbols.x);
+			m_secondReelAnimator.SetInteger ("Symbol", (int)loseConditionSymbols.y);
+			m_thirdReelAnimator.SetInteger ("Symbol", (int)loseConditionSymbols.z);
+
 
 		}
 	}
 
+	public void SetWinAmount (int i_winAmount)
+	{
+		m_winAmount = i_winAmount;
+	}
 
 
 
