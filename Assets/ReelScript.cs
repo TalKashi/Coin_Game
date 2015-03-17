@@ -6,20 +6,13 @@ public class ReelScript : MonoBehaviour {
 	public GameObject[] m_Symbols;
 	private int m_numOfFeatures = -1;
 
-	private Vector3[] loseConditions = {
-		new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),
-		new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),
-		new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),
-		new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),
-		new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3),new Vector3 (1, 2, 3)};
-
 	public int GetNumberOfSymbols()
 	{
 		return m_Symbols.Length;
 	}
 
 	public void StartSpinnig(){
-		// TODO:
+		// TODO: start animation
 	}
 
 	public void StopSpinnigOnSymbol (int i_symbol)

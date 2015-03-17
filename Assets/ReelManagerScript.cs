@@ -4,7 +4,6 @@ using System.Collections;
 public class ReelManagerScript : MonoBehaviour {
 
 	public GameObject[] m_reels;
-	public float m_WinRatio;
 	private ReelScript[] m_reelScripts;
 	public float m_delayBetweenSpins;
 
@@ -51,15 +50,6 @@ public class ReelManagerScript : MonoBehaviour {
 		}
 	}
 
-	void generateWinConditionList()
-	{
-		for (int i = 0; i < m_reelScripts.Length; i++) 
-		{
-			//m_reelScripts[i].GetSymbolScript;
-		}
-
-
-	}
 
 
 }
