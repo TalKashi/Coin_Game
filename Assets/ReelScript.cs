@@ -4,6 +4,7 @@ using System.Collections;
 public class ReelScript : MonoBehaviour {
 
 	public GameObject[] m_Symbols;
+    public int[] m_ReelVector;
 	private int m_numOfFeatures = -1;
 
 	public int GetNumberOfSymbols()
@@ -19,6 +20,11 @@ public class ReelScript : MonoBehaviour {
 	{
 		// TODO: stop animation
 	}
+
+    public void StopSpinnigOnIndex(int i_vectorIndex)
+    {
+        // TODO: stop animation
+    }
 
 	public int GetNumberOfFeature()
 	{
@@ -43,7 +49,10 @@ public class ReelScript : MonoBehaviour {
 		return symbols;
 	}
 
-
+    public int GetRandomReelPosition()
+    {
+        return Random.Range(0, m_ReelVector.Length);
+    }
 
 	public SymbolScript GetSymbolScript(int i_symbol){
 		return m_Symbols [i_symbol].GetComponent<SymbolScript> ();

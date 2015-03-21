@@ -41,6 +41,35 @@ public class PayTableScript : MonoBehaviour {
 		}
 	}
 
+    public Dictionary<string, object> Contains(int[] i_spinResult)
+    {
+        bool won = false;
+        Dictionary<string, object> resultDictionary = new Dictionary<string, object>();
+        for (int i = 0; i < m_winVector.Length && !won; i++)
+        {
+            for (int j = 0; j < i_spinResult.Length; j++)
+            {
+                if (i_spinResult[j] != m_winVector[i][j])
+                {
+                    break;
+                }
+                if (j == i_spinResult.Length - 1)
+                {
+                    won = true;
+                    resultDictionary["winMultiplier"] = m_multiplierVector[i];
+                    resultDictionary["winVectorIndex"] = i;
+                    // More stuff?
+                }
+            }
+        }
+        if (!won)
+        {
+            resultDictionary["winMultiplier"] = 0;
+            resultDictionary["winVectorIndex"] = -1;
+        }
+
+        return resultDictionary;
+    }
 
 	public int GetMultiplier(int i_index){
 		return m_multiplierVector [i_index];

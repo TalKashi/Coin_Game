@@ -56,10 +56,12 @@ public class SlotMachineScript : MonoBehaviour {
 	{
 		Debug.Log ("OnSpinClick() enter");
 		StartCoroutine (m_reelManagerScript.SpinAllReels ());
-		Dictionary <string, System.Object> resultDict = calculateResult ();
-		printResults (resultDict);
+		//Dictionary <string, System.Object> resultDict = calculateResult ();
+	    int[] spinResult = m_reelManagerScript.GetResultVector();
+        printResults(spinResult);
+	    Dictionary <string, object> resultDict = m_payTableScript.Contains(spinResult);
 		yield return new WaitForSeconds (m_spinnigTime);
-		StartCoroutine (m_reelManagerScript.StopReels (ConvertVector3ToArray((Vector3)resultDict["winVector"])));
+		StartCoroutine (m_reelManagerScript.StopReels (spinResult));
 		yield return new WaitForSeconds (1f);
 		GameManagerScript.GameManager.AddMoneyToPlayer (m_currentBet * ((int) resultDict ["winMultiplier"]));
 		Debug.Log ("OnSpinClick() exit");
@@ -71,6 +73,16 @@ public class SlotMachineScript : MonoBehaviour {
 		Debug.Log ("winVector: " + (Vector3)i_resultDict ["winVector"]);
 		Debug.Log ("winMultiplier: " + (int)i_resultDict ["winMultiplier"]);
 	}
+
+    private void printResults(int[] i_resultVector)
+    {
+        string resultString = "";
+        for (int i = 0; i < i_resultVector.Length; i++)
+        {
+            resultString += i_resultVector[i] + " --- ";
+        }
+        Debug.Log(resultString);
+    }
 
 	private Dictionary <string, System.Object> calculateResult()
 	{

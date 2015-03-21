@@ -27,6 +27,10 @@ public class ReelManagerScript : MonoBehaviour {
 		m_reelScripts[i_reelIndex].StopSpinnigOnSymbol(i_symbol);
 	}
 
+    public void StopReelOnIndex(int i_reelIndex, int i_vectorIndex)
+    {
+        m_reelScripts[i_reelIndex].StopSpinnigOnIndex(i_vectorIndex);
+    }
 
 	public IEnumerator SpinAllReels(){
 		Debug.Log ("Spinning");
@@ -37,15 +41,26 @@ public class ReelManagerScript : MonoBehaviour {
 		}
 	}
 
-	public IEnumerator StopReels(int[] i_symbols){
-		if (i_symbols.Length != m_reels.Length) 
+    public int[] GetResultVector()
+    {
+        int[] result = new int[m_reels.Length];
+        for (int i = 0; i < m_reels.Length; i++)
+        {
+            result[i] = m_reelScripts[i].GetRandomReelPosition();
+        }
+
+        return result;
+    }
+
+	public IEnumerator StopReels(int[] i_endSpinIndices){
+        if (i_endSpinIndices.Length != m_reels.Length) 
 		{
-			Debug.LogError("i_symbols.Length != m_reels.Length");
+            Debug.LogError("i_endSpinIndices.Length != m_reels.Length");
 		}
 		Debug.Log ("Stop Spinning");
 		for (int i = 0; i < m_reelScripts.Length; i++) 
 		{
-			StopReelOnSymbol(i,i_symbols[i]);
+            StopReelOnIndex(i, i_endSpinIndices[i]);
 			yield return new WaitForSeconds(m_delayBetweenSpins);
 		}
 	}
