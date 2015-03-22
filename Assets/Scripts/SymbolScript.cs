@@ -21,11 +21,11 @@ public class SymbolScript : MonoBehaviour {
 	}
 
 
-	void FixedUpdate()
+	void Update()
 	{
 		//if (m_isSpinning) 
 		//{
-			float movement = this.transform.position.y - m_reelAnimationScript.GetSpeed(); 
+			float movement = this.transform.position.y - m_reelAnimationScript.GetSpeed()*Time.deltaTime; 
 			this.transform.position = new Vector3(this.transform.position.x, movement,this.transform.position.z);
 		//}
 	}
