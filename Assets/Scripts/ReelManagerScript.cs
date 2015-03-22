@@ -29,7 +29,7 @@ public class ReelManagerScript : MonoBehaviour {
 
     public void StopReelOnIndex(int i_reelIndex, int i_vectorIndex)
     {
-        m_reelScripts[i_reelIndex].StopSpinnigOnIndex(i_vectorIndex);
+        m_reelScripts[i_reelIndex].StopSpinnig();
     }
 
 	public IEnumerator SpinAllReels(){
