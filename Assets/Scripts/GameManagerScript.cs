@@ -68,12 +68,7 @@ public class GameManagerScript : MonoBehaviour
 		    m_player.AddExperience(10);
 		}
 
-		if (Time.time - m_startTime >= 30f)
-		{
-			print ("Adding money to bucket");
-			m_bucket.AddMoneyToBucket();
-			m_startTime = Time.time;
-		}
+        AddMoneyToBucket(Time.deltaTime);
 
 	    if (Input.GetKeyDown(KeyCode.Q))
 	    {
@@ -124,8 +119,8 @@ public class GameManagerScript : MonoBehaviour
 			Debug.Log ("Loaded Bucket");
 		} 
 		else
-		{
-			m_bucket = new Bucket (20, 1000, 60, 0);
+        {
+            m_bucket = new Bucket(100, 1080);
 			Debug.Log("Created new instance of bucket!");
 		}
 
@@ -135,7 +130,7 @@ public class GameManagerScript : MonoBehaviour
 			m_player = (Player)binaryFormatter.Deserialize (file);
 			file.Close ();
 			Debug.Log ("Loaded Player");
-			m_player.PlayerConnected(System.DateTime.Now);
+			AddMoneyToBucket(m_player.PlayerConnected(System.DateTime.Now));
 		} 
 		else
 		{
@@ -235,14 +230,16 @@ public class GameManagerScript : MonoBehaviour
     //    return m_bucket;
     //}
 
-    public void AddMoneyToBucket(int i_deltaTime)
+    private void AddMoneyToBucket(float i_deltaTime)
 	{
 		m_bucket.AddMoneyToBucket (i_deltaTime);
 	}
 
 	public void EmptyBucket()
 	{
-		AddMoneyToPlayer(m_bucket.EmptyBucket ());
+	    int moneyToAdd = m_bucket.EmptyBucket();
+        AddMoneyToPlayer(moneyToAdd);
+        m_statistics.UpdateMoneyEarnedFromBucket(moneyToAdd);
 	}
 
     public int GetMoneyInBucket()

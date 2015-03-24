@@ -76,10 +76,10 @@ public class Player
 		return m_minXPForLevel;
 	}
 
-    public void PlayerConnected(DateTime i_nowDate)
+    // Returns the delta time between last time was online and now
+    public float PlayerConnected(DateTime i_nowDate)
     {
-        int deltaTime = (int)i_nowDate.Subtract(m_disconnectDate).TotalMinutes;
-		GameManagerScript.GameManager.AddMoneyToBucket (deltaTime);
+        return (float)i_nowDate.Subtract(m_disconnectDate).TotalSeconds;
     }
 
     private bool checkIfReachedNewLevel()

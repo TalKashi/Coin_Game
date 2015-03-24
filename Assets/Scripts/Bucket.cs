@@ -6,56 +6,62 @@ using System.Collections;
 public class Bucket
 {
     DateTime m_lastBucketFlush;
-    int m_valueForMinute;
+    float m_valueForSecond;
     int m_maxAmount;
-    int m_totalTimeToCollect;
-    int m_currentMoneyInBucket;
+    float m_currentMoneyInBucket;
+    private bool m_isFull;
 
-	public Bucket(int i_valueForMinute,int i_maxAmount,int i_totalTimeToCollect,int i_currentMoneyInBucket)
+	public Bucket(int i_maxAmount,int i_totalTimeToCollectInSeconds)
     {
-		m_valueForMinute = i_valueForMinute;
+        m_valueForSecond = (float) i_maxAmount / i_totalTimeToCollectInSeconds;
 		m_maxAmount = i_maxAmount;
-		m_totalTimeToCollect = i_totalTimeToCollect;
-		m_currentMoneyInBucket = i_currentMoneyInBucket;
-	}
+		m_currentMoneyInBucket = 0;
+	    m_isFull = false;
+    }
 
     public int EmptyBucket()
     {
-        int moneyToReturn = m_currentMoneyInBucket;
+        // Can only empty bucket if the bucket is full
+        if (!m_isFull)
+        {
+            Debug.Log("Bucket is not full. Can't empty yet");
+            return 0;
+        }
+
+        int moneyToReturn = (int) m_currentMoneyInBucket;
+        Debug.Log("moneyToReturn=" + moneyToReturn + ";m_currentMoneyInBucket=" + m_currentMoneyInBucket);
         m_currentMoneyInBucket = 0;
         m_lastBucketFlush = DateTime.Now;
+        m_isFull = false;
 
+        Debug.Log("Emptying bucket. Returning " + moneyToReturn + " coins.");
         return moneyToReturn;
     }
 
-    public void AddMoneyToBucket()
+    public void AddMoneyToBucket(float i_deltaTime)
     {
-        if (m_currentMoneyInBucket >= m_maxAmount)
+        //Debug.Log("Adding money to bucket of " + i_deltaTime + " seconds");
+        if (m_isFull)
+        {
+            Debug.Log("Can't add more money to bucket. Bucket is full!");
             return;
+        }
 
-        m_currentMoneyInBucket += m_valueForMinute;
+        m_currentMoneyInBucket += m_valueForSecond * i_deltaTime;
 
         if (m_currentMoneyInBucket > m_maxAmount)
+        {
             m_currentMoneyInBucket = m_maxAmount;
-        Debug.Log("New value in bucket: " + m_currentMoneyInBucket);
-    }
+            m_isFull = true;
+            Debug.Log("Bucket is full! (" + m_currentMoneyInBucket + ")");
+        }
+            
 
-    public void AddMoneyToBucket(int i_minutes)
-    {
-        Debug.Log("Adding money to bucket of " + i_minutes + " minutes");
-        if (m_currentMoneyInBucket >= m_maxAmount)
-            return;
-
-        m_currentMoneyInBucket += m_valueForMinute * i_minutes;
-
-        if (m_currentMoneyInBucket > m_maxAmount)
-            m_currentMoneyInBucket = m_maxAmount;
-
-        Debug.Log("New value in bucket: " + m_currentMoneyInBucket);
+        //Debug.Log("New value in bucket: " + m_currentMoneyInBucket);
     }
 
 	public int GetMoneyInBucket ()
 	{
-		return m_currentMoneyInBucket;
+		return (int) m_currentMoneyInBucket;
 	}
 }
