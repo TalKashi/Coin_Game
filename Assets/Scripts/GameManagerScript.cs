@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -120,7 +121,7 @@ public class GameManagerScript : MonoBehaviour
 		} 
 		else
         {
-            m_bucket = new Bucket(100, 1080);
+            m_bucket = new Bucket(100, 20);
 			Debug.Log("Created new instance of bucket!");
 		}
 
@@ -245,6 +246,11 @@ public class GameManagerScript : MonoBehaviour
     public int GetMoneyInBucket()
     {
         return m_bucket.GetMoneyInBucket();
+    }
+
+    public TimeSpan GetNextEmptyTimeSpan()
+    {
+        return m_bucket.GetTimeUntilBucketIsFull();
     }
 
     #endregion Bucket Control

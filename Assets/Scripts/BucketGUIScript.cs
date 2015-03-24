@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -14,13 +15,26 @@ public class BucketGUIScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void Update ()
 	{
-		m_bucketText.text = "Bucket: " + GameManagerScript.GameManager.GetMoneyInBucket() + "$";
+	    updateText();
 	}
 
 	public void OnClickEvent()
 	{
 		GameManagerScript.GameManager.EmptyBucket ();
 	}
+
+    private void updateText()
+    {
+        TimeSpan timeLeft = GameManagerScript.GameManager.GetNextEmptyTimeSpan();
+        if (timeLeft == TimeSpan.Zero)
+        {
+            m_bucketText.text = "EMPTY NOW!";
+        }
+        else
+        {
+            m_bucketText.text = "Next Empty: " + timeLeft.ToString().Split('.')[0];
+        }
+    }
 }

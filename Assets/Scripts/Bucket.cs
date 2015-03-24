@@ -64,4 +64,13 @@ public class Bucket
 	{
 		return (int) m_currentMoneyInBucket;
 	}
+
+    public TimeSpan GetTimeUntilBucketIsFull()
+    {
+        // The formula
+        float moneyLeftToFill = m_maxAmount - m_currentMoneyInBucket;
+        float timeLeftInSeconds = moneyLeftToFill * (1 / m_valueForSecond);
+
+        return TimeSpan.FromSeconds(timeLeftInSeconds);
+    }
 }
