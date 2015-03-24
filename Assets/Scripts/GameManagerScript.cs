@@ -121,7 +121,7 @@ public class GameManagerScript : MonoBehaviour
 		} 
 		else
         {
-            m_bucket = new Bucket(100, 20);
+            m_bucket = new Bucket(100, 10800);
 			Debug.Log("Created new instance of bucket!");
 		}
 
