@@ -20,6 +20,8 @@ public class GameManagerScript : MonoBehaviour
 	public GameObject m_slotGameObject;
 	SlotGameObjectScript m_slotGameObjectScript;
 	public int m_chancesToWin;
+    public GameObject m_BucketGUI;
+    private BucketGUIScript m_BucketGUIScript;
 
     void Awake()
     {
@@ -46,6 +48,11 @@ public class GameManagerScript : MonoBehaviour
 		{
 			m_slotGameObjectScript = m_slotGameObject.GetComponent<SlotGameObjectScript> ();
 		}
+        m_BucketGUIScript = m_BucketGUI.GetComponent<BucketGUIScript>();
+        if (m_BucketGUIScript == null)
+        {
+            Debug.LogError("m_BucketGUIScript == null!");
+        }
 	}
 	
 	// Update is called once per frame
@@ -69,12 +76,13 @@ public class GameManagerScript : MonoBehaviour
 		    m_player.AddExperience(10);
 		}
 
-        AddMoneyToBucket(Time.deltaTime);
-
 	    if (Input.GetKeyDown(KeyCode.Q))
 	    {
 	        Debug.Log(m_statistics);
 	    }
+
+        AddMoneyToBucket(Time.deltaTime);
+        m_statistics.IncreamentTotalPlayTime(Time.deltaTime);
 	}
 
     void OnDisable()
@@ -121,7 +129,7 @@ public class GameManagerScript : MonoBehaviour
 		} 
 		else
         {
-            m_bucket = new Bucket(100, 10800);
+            m_bucket = new Bucket(0, 10800);
 			Debug.Log("Created new instance of bucket!");
 		}
 
@@ -251,6 +259,18 @@ public class GameManagerScript : MonoBehaviour
     public TimeSpan GetNextEmptyTimeSpan()
     {
         return m_bucket.GetTimeUntilBucketIsFull();
+    }
+
+    public void UpgradeBucket(int i_level, int i_maxAmount, int i_totalTimeToCollectInSeconds)
+    {
+        m_bucket.UpgradeBucket(i_level, i_maxAmount, i_totalTimeToCollectInSeconds);
+        m_BucketGUIScript.SetSpriteByLevel(i_level);
+        m_BucketGUI.SetActive(true);
+    }
+
+    public int GetBucketLevel()
+    {
+        return m_bucket.GetLevel();
     }
 
     #endregion Bucket Control
