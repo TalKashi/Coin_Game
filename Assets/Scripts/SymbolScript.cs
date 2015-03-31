@@ -33,12 +33,20 @@ public class SymbolScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.tag == "BottomBoundry") {
+		if (other.tag == "BottomBoundry" && m_reelAnimationScript.m_isSpinning) {
 			this.transform.position = m_topPosition.transform.position;
 			m_symbol = m_reelAnimationScript.GetNextIndexValueOfVector (m_vectorIndex);
 			m_vectorIndex = m_reelAnimationScript.GetNextIndexOfVector (m_vectorIndex);
 			m_spriteRenderer.sprite = m_symbolsSprites [m_symbol];
 		} 
+		Debug.Log ("here"+(other.tag == "BottomBoundry") +"&&"+ !m_reelAnimationScript.m_isSpinning);
+		if (other.tag == "BottomBoundry" && !m_reelAnimationScript.m_isSpinning) {
+			m_reelAnimationScript.StartSlowingDownAnimation();
+			this.gameObject.SetActive (false);
+		}
+	}
+
+		/*
 		else if (other.tag == "VerifyStopContidion")
 		{
 			Debug.Log (other.tag);
@@ -54,8 +62,9 @@ public class SymbolScript : MonoBehaviour {
 			m_reelAnimationScript.StopAnimation();
 		}
 
-	}
 
+	}
+	*/
 	public int GetSymbol()
 	{
 		return m_symbol;

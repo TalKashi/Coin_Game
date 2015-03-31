@@ -3,15 +3,20 @@ using System.Collections;
 
 public class ReelScript : MonoBehaviour {
 
+	public Sprite[] m_symbolsSprites;
 	public GameObject[] m_Symbols;
     public int[] m_ReelVector;
 	public GameObject m_reelAnimation;
+	public GameObject m_finalReelPosition;
 	private ReelAnimationScript m_reelAnimationScript;
 	private int m_currentVectorIndex;
+	private FinalReelPositionScript m_finalReelPositionScript;
+
 
 	void Awake()
 	{
 		m_reelAnimationScript = GetComponentInChildren<ReelAnimationScript> ();
+		m_finalReelPositionScript = m_finalReelPosition.GetComponent<FinalReelPositionScript> ();
 	}
 
 	void Start() 
@@ -48,6 +53,8 @@ public class ReelScript : MonoBehaviour {
     public void StopSpinnig()
     {
         m_reelAnimationScript.StopSpinning(m_currentVectorIndex);
+		m_finalReelPositionScript.SetisSpinning (false);
+
     }
 
 
@@ -64,6 +71,8 @@ public class ReelScript : MonoBehaviour {
 
     public int GetRandomReelPosition()
     {
+		Debug.Log(m_symbolsSprites[m_currentVectorIndex].name);
+		m_finalReelPositionScript.SetMiddleSprite(m_symbolsSprites[m_currentVectorIndex]);
 		m_currentVectorIndex = Random.Range(0, m_ReelVector.Length);
 		return m_currentVectorIndex;
     }

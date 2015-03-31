@@ -50,7 +50,7 @@ public class ReelAnimationScript : MonoBehaviour {
 	public void StartSlowingDownAnimation ()
 	{
 		//Room for emprovment
-		m_speed = m_speed / 10;
+		m_speed = 25;
 	}
 
 	public void StopAnimation ()
