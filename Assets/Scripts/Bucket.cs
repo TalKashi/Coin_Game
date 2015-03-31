@@ -61,10 +61,23 @@ public class Bucket
         //Debug.Log("New value in bucket: " + m_currentMoneyInBucket);
     }
 
+    public void UpgradeBucket(int i_newLevel, int i_maxAmount, int i_totalTimeToCollectInSeconds)
+    {
+        m_level = i_newLevel;
+        m_valueForSecond = (float)i_maxAmount / i_totalTimeToCollectInSeconds;
+        m_maxAmount = i_maxAmount;
+        m_isFull = false;
+    }
+
 	public int GetMoneyInBucket ()
 	{
 		return (int) m_currentMoneyInBucket;
 	}
+
+    public float GetMoneyInBucketForDebug()
+    {
+        return m_currentMoneyInBucket;
+    }
 
     // Returns the time left until the bucket is full or TimeSpan.MaxValue if it will never be full
     public TimeSpan GetTimeUntilBucketIsFull()
@@ -80,16 +93,23 @@ public class Bucket
         return TimeSpan.FromSeconds(timeLeftInSeconds);
     }
 
-    public void UpgradeBucket(int i_newLevel, int i_maxAmount, int i_totalTimeToCollectInSeconds)
-    {
-        m_level = i_newLevel;
-        m_valueForSecond = (float)i_maxAmount / i_totalTimeToCollectInSeconds;
-        m_maxAmount = i_maxAmount;
-        m_isFull = false;
-    }
-
     public int GetLevel()
     {
         return m_level;
+    }
+
+    public float GetValuePerSecond()
+    {
+        return m_valueForSecond;
+    }
+
+    public int GetMaxAmount()
+    {
+        return m_maxAmount;
+    }
+
+    public bool IsFull()
+    {
+        return m_isFull;
     }
 }

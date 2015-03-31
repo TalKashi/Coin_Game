@@ -53,6 +53,7 @@ public class GameManagerScript : MonoBehaviour
         {
             Debug.LogError("m_BucketGUIScript == null!");
         }
+        
 	}
 	
 	// Update is called once per frame
@@ -254,6 +255,26 @@ public class GameManagerScript : MonoBehaviour
     public int GetMoneyInBucket()
     {
         return m_bucket.GetMoneyInBucket();
+    }
+
+    public float GetMoneyInBucketForDebug()
+    {
+        return m_bucket.GetMoneyInBucketForDebug();
+    }
+
+    public float GetBucketValuePerSec()
+    {
+        return m_bucket.GetValuePerSecond();
+    }
+
+    public int GetBucketMaxAmount()
+    {
+        return m_bucket.GetMaxAmount();
+    }
+
+    public bool IsBucketFull()
+    {
+        return m_bucket.IsFull();
     }
 
     public TimeSpan GetNextEmptyTimeSpan()
