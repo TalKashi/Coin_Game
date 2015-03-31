@@ -11,6 +11,7 @@ public class SymbolScript : MonoBehaviour {
 	public GameObject m_topPosition;
 	public Sprite[] m_symbolsSprites;
 	private int m_stopPosition;
+	public bool m_isStopPressed;
 
 	private ReelAnimationScript m_reelAnimationScript;
 
@@ -23,11 +24,14 @@ public class SymbolScript : MonoBehaviour {
 
 	void Update()
 	{
-		//if (m_isSpinning) 
-		//{
-			float movement = this.transform.position.y - m_reelAnimationScript.GetSpeed()*Time.deltaTime; 
-			this.transform.position = new Vector3(this.transform.position.x, movement,this.transform.position.z);
-		//}
+		if (m_reelAnimationScript.m_isSpinning && !m_reelAnimationScript.m_isStopPressed) {
+			//temp solution, need to hide fake reel
+			m_spriteRenderer.color = new Vector4(m_spriteRenderer.color.r,m_spriteRenderer.color.b,m_spriteRenderer.color.g,255f);
+			float movement = this.transform.position.y - m_reelAnimationScript.GetSpeed () * Time.deltaTime; 
+			this.transform.position = new Vector3 (this.transform.position.x, movement, this.transform.position.z);
+		} else if (!m_reelAnimationScript.m_isSpinning && m_reelAnimationScript.m_isStopPressed) {
+			m_spriteRenderer.color = new Vector4(m_spriteRenderer.color.r,m_spriteRenderer.color.b,m_spriteRenderer.color.g,0f);
+		}
 	}
 
 
@@ -39,11 +43,6 @@ public class SymbolScript : MonoBehaviour {
 			m_vectorIndex = m_reelAnimationScript.GetNextIndexOfVector (m_vectorIndex);
 			m_spriteRenderer.sprite = m_symbolsSprites [m_symbol];
 		} 
-		Debug.Log ("here"+(other.tag == "BottomBoundry") +"&&"+ !m_reelAnimationScript.m_isSpinning);
-		if (other.tag == "BottomBoundry" && !m_reelAnimationScript.m_isSpinning) {
-			m_reelAnimationScript.StartSlowingDownAnimation();
-			this.gameObject.SetActive (false);
-		}
 	}
 
 		/*

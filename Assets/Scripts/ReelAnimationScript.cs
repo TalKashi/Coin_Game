@@ -8,9 +8,11 @@ public class ReelAnimationScript : MonoBehaviour {
 	public float m_speed;
 	public bool m_isSpinning = false;
 	public int m_stopPosition;
+	public bool m_isStopPressed;
 
 	void  Start()
 	{
+		m_isStopPressed = false;
 		m_ReelVector = GetComponentInParent<ReelScript>().GetReelVector();
 
 	}
@@ -27,12 +29,14 @@ public class ReelAnimationScript : MonoBehaviour {
 
 	public void StopSpinning(int i_stopIndex)
 	{
+		m_isStopPressed = true;
 		m_isSpinning = false;
 		m_stopPosition = i_stopIndex;
 	}
 	
 	public void StartSpinning()
 	{
+		m_isStopPressed = false;
 		m_isSpinning = true;
 		m_speed = m_defaultSpeed;
 	}

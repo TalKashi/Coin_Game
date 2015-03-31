@@ -21,9 +21,10 @@ public class FinalReelPositionScript : MonoBehaviour {
 		}
 
 		if (!m_isSpinning) {
-			float movement = this.transform.position.y - m_speed*Time.deltaTime; 
-			this.transform.position = new Vector3(this.transform.position.x, movement,this.transform.position.z);
-		}
+			float movement = this.transform.position.y - m_speed * Time.deltaTime; 
+			this.transform.position = new Vector3 (this.transform.position.x, movement, this.transform.position.z);
+		} 
+
 	}
 
 	public void SetTopSprite(Sprite i_topSprite)
@@ -51,5 +52,10 @@ public class FinalReelPositionScript : MonoBehaviour {
 		if (other.tag == "BottomBoundrySymbolPosition") {
 			SetisSpinning(true);
 		}
+	}
+
+	public void ResetPosition ()
+	{
+		this.transform.position = new Vector3 (0f, 15f, 0f);
 	}
 }
