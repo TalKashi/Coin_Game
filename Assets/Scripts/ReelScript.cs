@@ -3,7 +3,6 @@ using System.Collections;
 
 public class ReelScript : MonoBehaviour {
 
-	public Sprite[] m_symbolsSprites;
 	public GameObject[] m_Symbols;
     public int[] m_ReelVector;
 	public GameObject m_reelAnimation;
@@ -54,7 +53,7 @@ public class ReelScript : MonoBehaviour {
     public void StopSpinnig()
     {
 		Debug.Log ("m_finalReelPositionScript.SetMiddleSprite (m_symbolsSprites [m_currentVectorIndex]);");
-		m_finalReelPositionScript.SetMiddleSprite (m_symbolsSprites [m_currentVectorIndex]);
+		m_finalReelPositionScript.SetMiddleSprite (SymbolSpriteManager.symbolSpriteManager.GetSprite (m_currentVectorIndex));
         m_reelAnimationScript.StopSpinning(m_currentVectorIndex);
 		m_finalReelPositionScript.SetisSpinning (false);
 
@@ -76,7 +75,7 @@ public class ReelScript : MonoBehaviour {
     {
 		m_currentVectorIndex = Random.Range(0, m_ReelVector.Length);
 		//Set picture
-		m_finalReelPositionScript.SetMiddleSprite(m_symbolsSprites[m_currentVectorIndex]);
+		m_finalReelPositionScript.SetMiddleSprite(SymbolSpriteManager.symbolSpriteManager.GetSprite (m_currentVectorIndex));
 		return m_currentVectorIndex;
     }
 

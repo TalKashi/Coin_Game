@@ -9,11 +9,9 @@ public class SymbolScript : MonoBehaviour {
 	public int m_vectorIndex;
 	private SpriteRenderer m_spriteRenderer;
 	public GameObject m_topPosition;
-	public Sprite[] m_symbolsSprites;
 	private int m_stopPosition;
 	public bool m_isStopPressed;
 	float m_buttomPositionY;
-
 
 	private ReelAnimationScript m_reelAnimationScript;
 
@@ -31,7 +29,7 @@ public class SymbolScript : MonoBehaviour {
 			this.transform.position = m_topPosition.transform.position;
 			m_symbol = m_reelAnimationScript.GetNextIndexValueOfVector (m_vectorIndex);
 			m_vectorIndex = m_reelAnimationScript.GetNextIndexOfVector (m_vectorIndex);
-			m_spriteRenderer.sprite = m_symbolsSprites [m_symbol];
+			m_spriteRenderer.sprite = SymbolSpriteManager.symbolSpriteManager.GetSprite (m_symbol);
 
 		}
 
