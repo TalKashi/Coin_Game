@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ReelScript : MonoBehaviour {
@@ -53,6 +53,8 @@ public class ReelScript : MonoBehaviour {
 
     public void StopSpinnig()
     {
+		Debug.Log ("m_finalReelPositionScript.SetMiddleSprite (m_symbolsSprites [m_currentVectorIndex]);");
+		m_finalReelPositionScript.SetMiddleSprite (m_symbolsSprites [m_currentVectorIndex]);
         m_reelAnimationScript.StopSpinning(m_currentVectorIndex);
 		m_finalReelPositionScript.SetisSpinning (false);
 
@@ -72,9 +74,9 @@ public class ReelScript : MonoBehaviour {
 
     public int GetRandomReelPosition()
     {
-		Debug.Log(m_symbolsSprites[m_currentVectorIndex].name);
-		m_finalReelPositionScript.SetMiddleSprite(m_symbolsSprites[m_currentVectorIndex]);
 		m_currentVectorIndex = Random.Range(0, m_ReelVector.Length);
+		//Set picture
+		m_finalReelPositionScript.SetMiddleSprite(m_symbolsSprites[m_currentVectorIndex]);
 		return m_currentVectorIndex;
     }
 

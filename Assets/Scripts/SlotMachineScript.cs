@@ -17,6 +17,8 @@ public class SlotMachineScript : MonoBehaviour {
 	private ReelManagerScript m_reelManagerScript;
 	private PayTableScript m_payTableScript;
 
+	private float m_winAmount;
+
 
 	public static int[] ConvertVector3ToArray(Vector3 i_vectorToConvert)
 	{
@@ -169,6 +171,13 @@ public class SlotMachineScript : MonoBehaviour {
 		resultDictionary ["winMultiplier"] = 0;
 		resultDictionary ["winType"] = WinType.Lost;
 		return resultDictionary;
+	}
+
+
+
+	public void SetWinAmount (int i_winAmount)
+	{
+		m_winAmount = i_winAmount;
 	}
 
 

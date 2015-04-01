@@ -18,7 +18,7 @@ public class GameManagerScript : MonoBehaviour
 	string m_currentScene;
 	public float m_timeReelsToSpin;
 	public GameObject m_slotGameObject;
-	SlotGameObjectScript m_slotGameObjectScript;
+	SlotMachineScript m_slotMachineScript;
 	public int m_chancesToWin;
     public GameObject m_BucketGUI;
     private BucketGUIScript m_BucketGUIScript;
@@ -46,7 +46,7 @@ public class GameManagerScript : MonoBehaviour
 		m_currentScene = Application.loadedLevelName;
 		if (m_slotGameObject != null) 
 		{
-			m_slotGameObjectScript = m_slotGameObject.GetComponent<SlotGameObjectScript> ();
+			m_slotMachineScript = m_slotGameObject.GetComponent<SlotMachineScript> ();
 		}
         m_BucketGUIScript = m_BucketGUI.GetComponent<BucketGUIScript>();
         if (m_BucketGUIScript == null)
@@ -317,7 +317,8 @@ public class GameManagerScript : MonoBehaviour
     {
 		
 		m_slotGameObject = GameObject.FindGameObjectWithTag ("SlotGameObject");
-		m_slotGameObjectScript = m_slotGameObject.GetComponent<SlotGameObjectScript> ();
+		m_slotMachineScript = m_slotGameObject.GetComponent<SlotMachineScript> ();
+		StartCoroutine(m_slotMachineScript.OnSpinClick ());
 
         int winAmount;
         // TODO: All the checks that we do now in the OnSpinEvent we should do here! Also means to move calls to statistics to here.
@@ -339,17 +340,18 @@ public class GameManagerScript : MonoBehaviour
          * Then start slot animation (disable GUI buttons until animation ends)
          */
 
+		/*
 		//Temp solution, StartCoroutine issues it doesnt wait until it finishes,it continue to execute the code. talk to Serge.
 		winAmount = m_slot.OnSpinEvent ();
 		m_slotGameObjectScript.SetWinAmount (winAmount);
 		m_slotGameObjectScript.StartSpinnigAnimation (m_timeReelsToSpin);
-        
+        */
 		/*
          * TODO: Change the ISlot.OnSpinEvent to something else that will be run after previous check.
          * Will return amount won.
          */ 
 		m_slot.SetChancesToWin (m_chancesToWin);
-
+		/*
         if (winAmount > 0) {
 			Debug.Log("player Won");
 			// Player has won!
@@ -367,6 +369,7 @@ public class GameManagerScript : MonoBehaviour
 			//lose animation
 			//m_slotGameObjectScript.DisplayResult(false);
 		}
+		*/
     }
 
     public void OnIncreaseBet()
@@ -389,6 +392,7 @@ public class GameManagerScript : MonoBehaviour
 
 	private string getNextScene(string i_scene)
 	{
+		/*
 		if (i_scene == "Coin_Kashi") {
 			m_currentScene = "Slot_Kashi";
 		} 
@@ -396,7 +400,14 @@ public class GameManagerScript : MonoBehaviour
 		{
 			m_currentScene = "Coin_Kashi";
 		}
-
+		*/
+		if (i_scene == "Coin_Serge") {
+			m_currentScene = "NewSlot_Serge";
+		} 
+		else 
+		{
+			m_currentScene = "Coin_Serge";
+		}
 		return m_currentScene;
 	}
 }

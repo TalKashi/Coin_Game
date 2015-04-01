@@ -34,12 +34,12 @@ public class FinalReelPositionScript : MonoBehaviour {
 
 	public void SetMiddleSprite(Sprite i_middleSprite)
 	{
-		m_topSymbol.GetComponent<SpriteRenderer> ().sprite = i_middleSprite;
+		m_middleSymbol.GetComponent<SpriteRenderer> ().sprite = i_middleSprite;
 	}
 
 	public void SetButtomSprite(Sprite i_buttomSprite)
 	{
-		m_topSymbol.GetComponent<SpriteRenderer> ().sprite = i_buttomSprite;
+		m_buttomSymbol.GetComponent<SpriteRenderer> ().sprite = i_buttomSprite;
 	}
 
 	public void SetisSpinning(bool i_isSpinning){
@@ -50,12 +50,13 @@ public class FinalReelPositionScript : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "BottomBoundrySymbolPosition") {
+			this.transform.position = new Vector3 (this.transform.position.x, other.transform.position.y+3f, this.transform.position.z);
 			SetisSpinning(true);
 		}
 	}
 
 	public void ResetPosition ()
 	{
-		this.transform.position = new Vector3 (0f, 15f, 0f);
+		this.transform.position = new Vector3 (this.transform.position.x, 15f, this.transform.position.z);
 	}
 }
