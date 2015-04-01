@@ -41,7 +41,7 @@ public class ReelScript : MonoBehaviour {
 	}
 
 	public void StartSpinnig(){
-		m_finalReelPositionScript.ResetPosition ();
+		m_finalReelPositionScript.ResetPosition ();	
 		m_reelAnimationScript.StartSpinning ();
 	}
 
