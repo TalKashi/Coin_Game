@@ -318,7 +318,7 @@ public class GameManagerScript : MonoBehaviour
 		
 		m_slotGameObject = GameObject.FindGameObjectWithTag ("SlotGameObject");
 		m_slotMachineScript = m_slotGameObject.GetComponent<SlotMachineScript> ();
-		StartCoroutine(m_slotMachineScript.OnSpinClick ());
+
 
         int winAmount;
         // TODO: All the checks that we do now in the OnSpinEvent we should do here! Also means to move calls to statistics to here.
@@ -332,6 +332,7 @@ public class GameManagerScript : MonoBehaviour
         /*
          *  Player can bet so decrease player money with current bet
          */
+		StartCoroutine(m_slotMachineScript.OnSpinClick ());
         AddMoneyToPlayer(-m_slot.GetCurrentBet());
         AddExperienceToPlayer(10);
         m_statistics.IncreamentTotalBets();
