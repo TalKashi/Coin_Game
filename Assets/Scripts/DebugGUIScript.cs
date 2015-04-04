@@ -15,11 +15,16 @@ public class DebugGUIScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-        m_text.text = string.Format("Bucket Money: {0}\n" +
-                                    "Bucket Level: {1}\n" +
-                                    "Bucket Value/sec: {2}\n" +
-                                    "Bucket Max Amount: {3}\n" +
-                                    "Bucket isFull: {4}\n", GameManagerScript.GameManager.GetMoneyInBucketForDebug(), GameManagerScript.GameManager.GetBucketLevel(),
-                                    GameManagerScript.GameManager.GetBucketValuePerSec(), GameManagerScript.GameManager.GetBucketMaxAmount(), GameManagerScript.GameManager.IsBucketFull());
+	    m_text.text = string.Format("Bucket Money: {0}\n" +
+	                                "Bucket Level: {1}\n" +
+	                                "Bucket Value/sec: {2}\n" +
+	                                "Bucket Max Amount: {3}\n" +
+	                                "Bucket isFull: {4}\n" +
+	                                "Coin Value: {5}\n" +
+	                                "Coin Level: {6}\n", GameManagerScript.GameManager.GetMoneyInBucketForDebug(),
+	                                GameManagerScript.GameManager.GetBucketLevel(),
+	                                GameManagerScript.GameManager.GetBucketValuePerSec(), GameManagerScript.GameManager.GetBucketMaxAmount(),
+	                                GameManagerScript.GameManager.IsBucketFull(),
+	                                GameManagerScript.GameManager.GetCoinValue(), GameManagerScript.GameManager.GetCoinLevel());
 	}
 }

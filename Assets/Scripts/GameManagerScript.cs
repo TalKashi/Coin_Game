@@ -58,24 +58,6 @@ public class GameManagerScript : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		//Press on coin
-		if(Input.GetKeyDown(KeyCode.A))
-		{
-			print("Add coin with value of: " + m_coin.m_value);
-			m_coin.OnClickEvent();
-		}
-
-		//Print balance
-		if(Input.GetKeyDown(KeyCode.D))
-		{
-			print("The amounth of money you have is: "+m_player.GetCash());
-		}
-		//
-		if(Input.GetKeyDown(KeyCode.Z))
-		{
-			print("Spin");
-		    m_player.AddExperience(10);
-		}
 
 	    if (Input.GetKeyDown(KeyCode.Q))
 	    {
@@ -231,6 +213,29 @@ public class GameManagerScript : MonoBehaviour
         m_statistics.IncreamentTotalClicksOnCoin();
     }
 
+    public void UpgradeCoin(int i_level)
+    {
+        int nextCoinValue = CoinLevelManager.coinLevelManager.GetLevelValue(i_level);
+        int moneyToReduceFromPlayer = CoinLevelManager.coinLevelManager.GetLevelCost(i_level);
+        if (nextCoinValue == -1 || moneyToReduceFromPlayer == -1)
+        {
+            return;
+        }
+
+        m_coin.SetNewValue(nextCoinValue, i_level);
+        AddMoneyToPlayer(-moneyToReduceFromPlayer);
+    }
+
+    public int GetCoinLevel()
+    {
+        return m_coin.GetLevel();
+    }
+
+    public int GetCoinValue()
+    {
+        return m_coin.GetValue();
+    }
+
     #endregion Coin Control
 
     #region Bucket Control
@@ -282,9 +287,15 @@ public class GameManagerScript : MonoBehaviour
         return m_bucket.GetTimeUntilBucketIsFull();
     }
 
-    public void UpgradeBucket(int i_level, int i_maxAmount, int i_totalTimeToCollectInSeconds)
+    public void UpgradeBucket(int i_level)
     {
-        m_bucket.UpgradeBucket(i_level, i_maxAmount, i_totalTimeToCollectInSeconds);
+        int nextMaxAmount = BucketLevelManager.bucketLevelManager.GetLevelBucketCap(i_level);
+        int nextTimeCap = BucketLevelManager.bucketLevelManager.GetLevelTimeCap(i_level);
+        if (nextMaxAmount == -1 || nextTimeCap == -1)
+        {
+            return;
+        }
+        m_bucket.UpgradeBucket(i_level, nextMaxAmount, nextTimeCap);
         m_BucketGUIScript.SetSpriteByLevel(i_level);
         m_BucketGUI.SetActive(true);
     }
