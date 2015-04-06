@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Events;
 
 public class CoinUpgradeScript : MonoBehaviour
 {
@@ -8,7 +10,7 @@ public class CoinUpgradeScript : MonoBehaviour
 
     void Awake()
     {
-        gameObject.SetActive(false);
+        gameObject.SetActive(false);        
     }
 
     void Start()
@@ -30,8 +32,12 @@ public class CoinUpgradeScript : MonoBehaviour
             newButtonScript.m_minExpectedCoinLevel = i;
             newButtonScript.m_upgradeCost = CoinLevelManager.coinLevelManager.GetLevelCost(i);
             newButton.transform.SetParent(transform);
+            Button onClickButton = newButton.GetComponent<Button>();
+            int parameterForButton = i;
+            onClickButton.onClick.AddListener(() => UpgradeCoin(parameterForButton));
             newButton.SetActive(true);
         }
         
     }
+
 }

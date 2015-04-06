@@ -217,12 +217,13 @@ public class GameManagerScript : MonoBehaviour
     {
         int nextCoinValue = CoinLevelManager.coinLevelManager.GetLevelValue(i_level);
         int moneyToReduceFromPlayer = CoinLevelManager.coinLevelManager.GetLevelCost(i_level);
+        Debug.Log("UpgradeCoin(i){i=" + i_level + ";nextCoinValue=" + nextCoinValue + ";moneyToReduceFromPlayer=" + moneyToReduceFromPlayer);
         if (nextCoinValue == -1 || moneyToReduceFromPlayer == -1)
         {
             return;
         }
 
-        m_coin.SetNewValue(nextCoinValue, i_level);
+        m_coin.SetNewValue(nextCoinValue, i_level + 1);
         AddMoneyToPlayer(-moneyToReduceFromPlayer);
     }
 
