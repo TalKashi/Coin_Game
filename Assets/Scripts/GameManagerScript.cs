@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -370,10 +371,6 @@ public class GameManagerScript : MonoBehaviour
         AddMoneyToPlayer(-m_slot.GetCurrentBet());
         AddExperienceToPlayer(10);
         m_statistics.IncreamentTotalBets();
-
-        /*
-         * Then start slot animation (disable GUI buttons until animation ends)
-         */
 
 		/*
 		//Temp solution, StartCoroutine issues it doesnt wait until it finishes,it continue to execute the code. talk to Serge.

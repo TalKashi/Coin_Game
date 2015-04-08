@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -57,6 +58,7 @@ public class SlotMachineScript : MonoBehaviour {
 	public IEnumerator OnSpinClick()
 	{
 		Debug.Log ("OnSpinClick() enter");
+        DisbaleButtonsManagerScript.DisbaleButtonsManager.SetButtonsActive(false);
 		StartCoroutine (m_reelManagerScript.SpinAllReels ());
 		//Dictionary <string, System.Object> resultDict = calculateResult ();
 	    int[] spinResult = m_reelManagerScript.GetResultVector();

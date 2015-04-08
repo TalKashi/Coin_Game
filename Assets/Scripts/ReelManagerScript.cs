@@ -63,6 +63,7 @@ public class ReelManagerScript : MonoBehaviour {
             StopReelOnIndex(i, i_endSpinIndices[i]);
 			yield return new WaitForSeconds(m_delayBetweenSpins);
 		}
+        DisbaleButtonsManagerScript.DisbaleButtonsManager.SetButtonsActive(true);
 	}
 
 
