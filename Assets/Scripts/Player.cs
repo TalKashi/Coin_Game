@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Threading;
 
 [Serializable]
 public class Player
@@ -12,6 +13,7 @@ public class Player
     int m_level;
     string m_name;
     DateTime m_disconnectDate;
+	public float m_moneyTimeAnimation;
 
     public Player(string i_name, int i_initialCash)
     {
@@ -36,10 +38,12 @@ public class Player
 
     public void AddMoney(int i_amount)
     {
+
 		Debug.Log ("i_Amount = " + i_amount);
         m_cash += i_amount;
 		Debug.Log ("New Money: " + m_cash);
     }
+
 
     public bool AddExperience(int i_amount)
     {

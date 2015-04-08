@@ -8,7 +8,7 @@ public class GameManagerScript : MonoBehaviour
 {
 
     public static GameManagerScript GameManager;
-
+	public float m_timeMoneyChangeAnimation;
 	Player m_player;
 	Bucket m_bucket;
 	Coin m_coin;
@@ -191,9 +191,31 @@ public class GameManagerScript : MonoBehaviour
 
     public void AddMoneyToPlayer(int i_amount)
     {
-        m_player.AddMoney(i_amount);
+		StartCoroutine(addMoneyAnimation(i_amount));
+        //m_player.AddMoney(i_amount);
         m_statistics.CheckAndUpdateRecordCash(m_player.GetCash());
     }
+
+	IEnumerator  addMoneyAnimation(int i_amount){
+		int deltaCoin = 0;
+		if (i_amount < 0) 
+		{
+			deltaCoin = 1;
+		} 
+		else 
+		{
+			deltaCoin = -1;
+		}
+		
+		while (i_amount != 0) 
+		{
+			i_amount += deltaCoin;
+			m_player.AddMoney (-deltaCoin);
+			yield return new WaitForSeconds(m_timeMoneyChangeAnimation);
+			
+		}
+	}
+
 
     public void AddExperienceToPlayer(int i_amount)
     {
