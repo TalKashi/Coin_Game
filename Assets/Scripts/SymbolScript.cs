@@ -26,7 +26,7 @@ public class SymbolScript : MonoBehaviour {
 	void Update()
 	{
 		if (m_buttomPositionY > this.transform.position.y) {
-			this.transform.position = m_topPosition.transform.position;
+			this.transform.position = m_topPosition.transform.position + new Vector3(0f,transform.position.y - m_buttomPositionY, 0f);
 			m_symbol = m_reelAnimationScript.GetNextIndexValueOfVector (m_vectorIndex);
 			m_vectorIndex = m_reelAnimationScript.GetNextIndexOfVector (m_vectorIndex);
 			m_spriteRenderer.sprite = SymbolSpriteManager.symbolSpriteManager.GetSprite (m_symbol);
@@ -36,7 +36,7 @@ public class SymbolScript : MonoBehaviour {
 		if (m_reelAnimationScript.m_isSpinning && !m_reelAnimationScript.m_isStopPressed) {
 			//temp solution, need to hide fake reel
 			m_spriteRenderer.color = new Vector4(m_spriteRenderer.color.r,m_spriteRenderer.color.b,m_spriteRenderer.color.g,255f);
-			float movement = this.transform.position.y - m_reelAnimationScript.GetSpeed (); 
+			float movement = this.transform.position.y - m_reelAnimationScript.GetSpeed () * Time.deltaTime; 
 			this.transform.position = new Vector3 (this.transform.position.x, movement, this.transform.position.z);
 		} else if (!m_reelAnimationScript.m_isSpinning && m_reelAnimationScript.m_isStopPressed) {
 			m_spriteRenderer.color = new Vector4(m_spriteRenderer.color.r,m_spriteRenderer.color.b,m_spriteRenderer.color.g,0f);

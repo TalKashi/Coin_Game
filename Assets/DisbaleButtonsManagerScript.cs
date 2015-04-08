@@ -14,7 +14,7 @@ public class DisbaleButtonsManagerScript : MonoBehaviour {
         if (DisbaleButtonsManager == null)
         {
             DisbaleButtonsManager = this;
-            DontDestroyOnLoad(gameObject);
+            
         }
         else if (DisbaleButtonsManager != this)
         {
