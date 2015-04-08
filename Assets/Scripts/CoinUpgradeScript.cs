@@ -7,6 +7,7 @@ public class CoinUpgradeScript : MonoBehaviour
 {
 
     public GameObject CoinUpgradeButton;
+    public GameObject PanelObject;
 
     void Start()
     {
@@ -27,7 +28,7 @@ public class CoinUpgradeScript : MonoBehaviour
             UpgradeCoinChecker newButtonScript = newButton.GetComponent<UpgradeCoinChecker>();
             newButtonScript.m_minExpectedCoinLevel = i;
             newButtonScript.m_upgradeCost = CoinLevelManager.coinLevelManager.GetLevelCost(i);
-            newButton.transform.SetParent(transform);
+            newButton.transform.SetParent(PanelObject.transform);
             Button onClickButton = newButton.GetComponent<Button>();
             int parameterForButton = i;
             onClickButton.onClick.AddListener(() => UpgradeCoin(parameterForButton));

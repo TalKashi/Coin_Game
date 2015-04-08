@@ -7,6 +7,7 @@ public class BucketUpgradeScript : MonoBehaviour
 {
 	
 	public GameObject BucketUpgradeButton;
+    public GameObject PanelObject;
 	
 	void Start()
 	{
@@ -27,7 +28,7 @@ public class BucketUpgradeScript : MonoBehaviour
 			UpgradeBucketChecker newButtonScript = newButton.GetComponent<UpgradeBucketChecker>();
 			newButtonScript.m_minExpectedBucketLevel = i;
 			newButtonScript.m_minExpectedPlayerLevel = BucketLevelManager.bucketLevelManager.GetExpectedPlayerLevel(i);
-			newButton.transform.SetParent(transform);
+            newButton.transform.SetParent(PanelObject.transform);
 			Button onClickButton = newButton.GetComponent<Button>();
 			int parameterForButton = i;
 			onClickButton.onClick.AddListener(() => UpgradeBucket(parameterForButton));
