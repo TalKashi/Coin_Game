@@ -5,14 +5,9 @@ public class BucketLevelManager : MonoBehaviour {
 
     public static BucketLevelManager bucketLevelManager;
 
-    public int m_level1BucketCap = 100;
-    public int m_level1TimeCap = 10800;
-
-    public int m_level2BucketCap = 200;
-    public int m_level2TimeCap = 10800;
-
-    public int m_level3BucketCap = 300;
-    public int m_level3TimeCap = 10800;
+	public int[] m_bucketCap;
+	public int[] m_timeToFill;
+	public int[] m_expectedPlayerLevel;
 
     void Awake()
     {
@@ -24,38 +19,30 @@ public class BucketLevelManager : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+		if (m_bucketCap.Length != m_timeToFill.Length || m_expectedPlayerLevel.Length != m_timeToFill.Length )
+		{
+			Debug.LogError("m_bucketCap.Length != m_timeToFill.Lengt || m_expectedPlayerLevel.Length != m_timeToFill.Length ");
+		}
     }
 
 
     public int GetLevelBucketCap(int i_level)
     {
-        switch (i_level)
-        {
-            case 1:
-                return m_level1BucketCap;
-            case 2:
-                return m_level2BucketCap;
-            case 3:
-                return m_level3BucketCap;
-            default:
-                Debug.LogError("The level given (level=" + i_level + ") is not supported!");
-                return -1;
-        }
+		return m_bucketCap [i_level];
     }
 
     public int GetLevelTimeCap(int i_level)
     {
-        switch (i_level)
-        {
-            case 1:
-                return m_level1TimeCap;
-            case 2:
-                return m_level2TimeCap;
-            case 3:
-                return m_level3TimeCap;
-            default:
-                Debug.LogError("The level given (level=" + i_level + ") is not supported!");
-                return -1;
-        }
+		return m_timeToFill [i_level];
     }
+
+	public int GetExpectedPlayerLevel(int i_level)
+	{
+		return m_expectedPlayerLevel [i_level];
+	}
+
+	public int GetNumberOfLeveles()
+	{
+		return m_timeToFill.Length;
+	}
 }
