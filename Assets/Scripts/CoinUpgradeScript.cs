@@ -8,14 +8,10 @@ public class CoinUpgradeScript : MonoBehaviour
 
     public GameObject CoinUpgradeButton;
 
-    void Awake()
-    {
-        gameObject.SetActive(false);        
-    }
-
     void Start()
     {
         init();
+        gameObject.SetActive(false);
     }
 
     public void UpgradeCoin(int i_level)
