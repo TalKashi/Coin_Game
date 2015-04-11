@@ -41,8 +41,9 @@ public class ReelScript : MonoBehaviour {
 	}
 
 	public void StartSpinnig(){
-		m_finalReelPositionScript.ResetPosition ();	
+
 		m_reelAnimationScript.StartSpinning ();
+		m_finalReelPositionScript.ResetPosition ();	
 	}
 
 	public void StopSpinnigOnSymbol (int i_symbol)
@@ -74,8 +75,6 @@ public class ReelScript : MonoBehaviour {
     public int GetRandomReelPosition()
     {
 		m_currentVectorIndex = Random.Range(0, m_ReelVector.Length);
-		//Set picture
-		m_finalReelPositionScript.SetMiddleSprite(SymbolSpriteManager.symbolSpriteManager.GetSprite (m_currentVectorIndex));
 		return m_currentVectorIndex;
     }
 
